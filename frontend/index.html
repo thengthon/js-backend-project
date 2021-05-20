@@ -12,7 +12,7 @@
 </head>
 <body>
     <div class="authentication">
-        <div class="login center" style="display: none;">
+        <div class="c center" style="display: none;">
             <div class="head">
                 <span>Login</span>
                 <div class="profile">
@@ -22,24 +22,24 @@
             <form action="#" class="formLogin" name="formLogin" autocomplete="off">
                 <div class="input">
                     <i class="fa fa-user-circle"></i>
-                    <input type="text" name="fullname" id="fullname" placeholder="Username">
+                    <input type="text" name="fullname" id="fullname" placeholder="Username" required>
                 </div>
                 <div class="input">
                     <i class="fa fa-eye-slash"></i>
-                    <input type="password" name="pwd" id="pwd" placeholder="Password">
+                    <input type="password" name="pwd" id="pwd" placeholder="Password" required>
                 </div>
                 <div class="input">
                     <i class="fa fa-envelope"></i>
-                    <input type="email" name="email" id="email" placeholder="Email">
+                    <input type="email" name="email" id="email" placeholder="Email" required>
                 </div>
                 <div class="text">No account? <a href="#">Create an account?</a></div>
                 <div class="buttons">
                     <div class="leftBtn">
-                        <button type="reset">Clear</button>
-                        <button type="submit">Login</button>
+                        <button type="reset" class="clearLogin">Clear</button>
+                        <button type="submit" class="loginBtn">Login</button>
                     </div>
                     <div class="rightBtn">
-                        <button type="button" class="redBtn">Exit</button>
+                        <button type="button" class="redBtn exitBtn">Exit</button>
                     </div>
                 </div>
             </form>
@@ -53,25 +53,25 @@
             </div>
             <form action="#" class="fomrRegister" name="formRegister" autocomplete="off">
                 <div class="input twoInput">
-                    <input type="text" name="fName" id="fName" placeholder="First name">
-                    <input type="text" name="lName" id="lName" placeholder="Last name">
+                    <input type="text" name="fName" id="fName" placeholder="First name" required>
+                    <input type="text" name="lName" id="lName" placeholder="Last name" required>
                 </div>
                 <div class="input">
-                    <input type="email" name="email" id="email" placeholder="Email">
+                    <input type="email" name="email" id="email" placeholder="Email" required>
                 </div>
                 <div class="input">
-                    <input type="password" name="pwd" id="pwd" placeholder="Password">
+                    <input type="password" name="pwd" id="pwd" placeholder="Password" required>
                 </div>
                 <div class="input">
-                    <input type="password" name="pwd" id="pwd" placeholder="Confirm password">
+                    <input type="password" name="pwd" id="pwd" placeholder="Confirm password" required>
                 </div>
                 <div class="buttons">
                     <div class="leftBtn">
-                        <button type="reset">Clear</button>
-                        <button type="submit">Sign Up</button>
+                        <button type="reset" class="clearRegister">Clear</button>
+                        <button type="submit" class="registerBtn">Sign Up</button>
                     </div>
                     <div class="rightBtn">
-                        <button type="button" class="redBtn">Back</button>
+                        <button type="button" class="redBtn backBtn">Back</button>
                     </div>
                 </div>
             </form>
