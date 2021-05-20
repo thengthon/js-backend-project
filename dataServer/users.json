@@ -1,0 +1,22 @@
+[
+    {
+        "name": {
+            "firstName": "chum",
+            "lastName": "yoeurn",
+            "username": "chumyoeurn"
+        },
+        "password": "123chum",
+        "email": "chumyoeurn@gmail.com",
+        "conversations": []
+    },
+    {
+        "name": {
+            "firstName": "thon",
+            "lastName": "theng",
+            "username": "thontheng"
+        },
+        "password": "123thon",
+        "email": "thontheng@gmail.com",
+        "conversations": []
+    }
+]

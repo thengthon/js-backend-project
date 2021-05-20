@@ -12,31 +12,27 @@
 </head>
 <body>
     <div class="authentication">
-        <div class="c center" style="display: none;">
+        <div class="login center">
             <div class="head">
                 <span>Login</span>
                 <div class="profile">
                     <i class="fa fa-user-circle"></i>
                 </div>
             </div>
-            <form action="#" class="formLogin" name="formLogin" autocomplete="off">
+            <form action="#" class="formLogin" autocomplete="off">
                 <div class="input">
                     <i class="fa fa-user-circle"></i>
-                    <input type="text" name="fullname" id="fullname" placeholder="Username" required>
+                    <input type="text" id="fullName" placeholder="Username" required>
                 </div>
                 <div class="input">
                     <i class="fa fa-eye-slash"></i>
-                    <input type="password" name="pwd" id="pwd" placeholder="Password" required>
+                    <input type="password" id="pwd" placeholder="Password" required minlength="5">
                 </div>
-                <div class="input">
-                    <i class="fa fa-envelope"></i>
-                    <input type="email" name="email" id="email" placeholder="Email" required>
-                </div>
-                <div class="text">No account? <a href="#">Create an account?</a></div>
+                <div class="text">No account? <a href="#" class="goRegister">Create an account?</a></div>
                 <div class="buttons">
                     <div class="leftBtn">
-                        <button type="reset" class="clearLogin">Clear</button>
-                        <button type="submit" class="loginBtn">Login</button>
+                        <button type="reset">Clear</button>
+                        <button type="button" class="loginBtn">Login</button>
                     </div>
                     <div class="rightBtn">
                         <button type="button" class="redBtn exitBtn">Exit</button>
@@ -44,31 +40,31 @@
                 </div>
             </form>
         </div>
-        <div class="register center">
+        <div class="register center" style="display: none">
             <div class="head">
                 <span>Sign up</span>
                 <div class="profile">
                     <i class="fa fa-user-circle"></i>
                 </div>
             </div>
-            <form action="#" class="fomrRegister" name="formRegister" autocomplete="off">
+            <form action="#" class="fomrRegister" autocomplete="off">
                 <div class="input twoInput">
-                    <input type="text" name="fName" id="fName" placeholder="First name" required>
-                    <input type="text" name="lName" id="lName" placeholder="Last name" required>
+                    <input type="text" id="fName" placeholder="First name" required>
+                    <input type="text" id="lName" placeholder="Last name" required>
                 </div>
                 <div class="input">
-                    <input type="email" name="email" id="email" placeholder="Email" required>
+                    <input type="email" id="email" placeholder="Email" required>
                 </div>
                 <div class="input">
-                    <input type="password" name="pwd" id="pwd" placeholder="Password" required>
+                    <input type="password" id="registerPwd" placeholder="Password" required minlength="5">
                 </div>
                 <div class="input">
-                    <input type="password" name="pwd" id="pwd" placeholder="Confirm password" required>
+                    <input type="password" id="confirmPwd" placeholder="Confirm password" required minlength="5">
                 </div>
                 <div class="buttons">
                     <div class="leftBtn">
-                        <button type="reset" class="clearRegister">Clear</button>
-                        <button type="submit" class="registerBtn">Sign Up</button>
+                        <button type="reset">Clear</button>
+                        <button type="button" class="registerBtn">Sign Up</button>
                     </div>
                     <div class="rightBtn">
                         <button type="button" class="redBtn backBtn">Back</button>
@@ -76,6 +72,9 @@
                 </div>
             </form>
         </div>
+    </div>
+    <div class="userPage"  style="display: none;">
+        <p>I am a user...!</p>
     </div>
 </body>
 </html>
