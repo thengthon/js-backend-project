@@ -6,10 +6,76 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JS Backend Project</title>
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="js/script.js" defer></script>
 </head>
 <body>
-    
+    <div class="authentication">
+        <div class="login center" style="display: none;">
+            <div class="head">
+                <span>Login</span>
+                <div class="profile">
+                    <i class="fa fa-user-circle"></i>
+                </div>
+            </div>
+            <form action="#" class="formLogin" name="formLogin" autocomplete="off">
+                <div class="input">
+                    <i class="fa fa-user-circle"></i>
+                    <input type="text" name="fullname" id="fullname" placeholder="Username">
+                </div>
+                <div class="input">
+                    <i class="fa fa-eye-slash"></i>
+                    <input type="password" name="pwd" id="pwd" placeholder="Password">
+                </div>
+                <div class="input">
+                    <i class="fa fa-envelope"></i>
+                    <input type="email" name="email" id="email" placeholder="Email">
+                </div>
+                <div class="text">No account? <a href="#">Create an account?</a></div>
+                <div class="buttons">
+                    <div class="leftBtn">
+                        <button type="reset">Clear</button>
+                        <button type="submit">Login</button>
+                    </div>
+                    <div class="rightBtn">
+                        <button type="button" class="redBtn">Exit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="register center">
+            <div class="head">
+                <span>Sign up</span>
+                <div class="profile">
+                    <i class="fa fa-user-circle"></i>
+                </div>
+            </div>
+            <form action="#" class="fomrRegister" name="formRegister" autocomplete="off">
+                <div class="input twoInput">
+                    <input type="text" name="fName" id="fName" placeholder="First name">
+                    <input type="text" name="lName" id="lName" placeholder="Last name">
+                </div>
+                <div class="input">
+                    <input type="email" name="email" id="email" placeholder="Email">
+                </div>
+                <div class="input">
+                    <input type="password" name="pwd" id="pwd" placeholder="Password">
+                </div>
+                <div class="input">
+                    <input type="password" name="pwd" id="pwd" placeholder="Confirm password">
+                </div>
+                <div class="buttons">
+                    <div class="leftBtn">
+                        <button type="reset">Clear</button>
+                        <button type="submit">Sign Up</button>
+                    </div>
+                    <div class="rightBtn">
+                        <button type="button" class="redBtn">Back</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
