@@ -44,7 +44,11 @@ function login(){
                     let goUserPage = document.querySelector(".userPage");
                     preDisplay = document.querySelector(".authentication");
                     hideShow(preDisplay, goUserPage, "block");
+                    isValidUser = true;
                 }
+            }
+            if (!isValidUser){
+                window.alert("Username or password is incorrect.");
             }
         })
     }
@@ -61,7 +65,7 @@ function register(){
     let password = document.querySelector("#registerPwd").value;
     let confirmPwd = document.querySelector("#confirmPwd").value;
     
-    let isValidData = ((fName !== "") && (lName !== "") && (email !== "") && (password !== "") && (confirmPwd !== "") && (password === confirmPwd));
+    let isValidData = (confirmPwd !== "") && (password === confirmPwd) && (password.length >= 5);
     if (isValidData){
         let newUser = {
             "name" : {
@@ -77,6 +81,8 @@ function register(){
         axios.post(URL + "/addNewUser", newUser).then((response) => {
             console.log(response.data);
         });
+    } else {
+        window.alert("Missing data...!");
     }
 }
 
