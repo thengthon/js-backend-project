@@ -78,9 +78,28 @@ function register(){
             "conversations" : []
         };
 
-        axios.post(URL + "/addNewUser", newUser).then((response) => {
-            console.log(response.data);
-        });
+        axios.get(URL + "/getUsers").then((response) => {
+            let users = response.data;
+            let isNewUser = true;
+            for (let user of users){
+                usernameServer = user.name.username;
+                passwordServer = user.password;
+                if (newUser.name.username === usernameServer && newUser.password === passwordServer){
+                    isNewUser = false;
+                }
+            }
+            if (isNewUser){
+                axios.post(URL + "/addNewUser", newUser).then((response) => {
+                    console.log(response.data);
+                    window.alert("User is created.");
+                    let goLoginPage = document.querySelector(".login");
+                    hideShow(preDisplay, goLoginPage, "block");
+                })
+            } else {
+                window.alert("User is existed.")
+            }
+        })
+
     } else {
         window.alert("Missing data...!");
     }
