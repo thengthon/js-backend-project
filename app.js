@@ -2,8 +2,7 @@ const express = require("express");
 const fs = require("fs");
 const app = express();
 
-const PORT = 5000;
-app.listen(process.env.PORT || PORT, () => console.log("Server is running...!"))
+app.listen(process.env.PORT || 5000, () => console.log("Server is running...!"))
 
 app.use(express.static("frontend"));
 app.use(express.json());

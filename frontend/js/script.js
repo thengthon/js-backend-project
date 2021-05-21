@@ -1,6 +1,6 @@
 
 // _______CONSTANT VARIABLES____________________________________
-const URL = "http://localhost:5000";
+const URL = "http://free-chat-2022.herokuapp.com";
 
 let preDisplay = document.querySelector(".login");
 
