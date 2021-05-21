@@ -96,7 +96,7 @@ function register(e){
             if (isNewUser){
                 axios.post(URL + "/addNewUser", newUser).then((response) => {
                     console.log(response.data);
-                    window.alert("User is created.");
+                    window.alert("User is created.\n" + "Your username is : " + fName.value + lName.value);
                     fName.value = "";
                     lName.value = "";
                     email.value = "";
@@ -106,7 +106,7 @@ function register(e){
                     hideShow(preDisplay, goLoginPage, "block");
                 })
             } else {
-                window.alert("User is existed.")
+                window.alert("User is existed")
             }
         })
 
