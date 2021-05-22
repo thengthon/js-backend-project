@@ -1,6 +1,6 @@
 
 // _______CONSTANT VARIABLES____________________________________
-const URL = "http://localhost:5000";
+const URL = "https://cambo-chat.herokuapp.com";
 
 let preDisplay = document.querySelector(".login");
 
@@ -29,18 +29,20 @@ exitBtn.addEventListener("click", () => {
 });
 
 // ----------------------------------------------------------------
-function login(){
-    let username = document.querySelector("#fullName").value;
-    let password = document.querySelector("#pwd").value;
+function login(e){
+    e.preventDefault();
+    let username = document.querySelector("#fullName");
+    let password = document.querySelector("#pwd");
     
-    if (username !== "" && password !== ""){
+    let isValid = username.checkValidity() && password.checkValidity();
+    if (isValid){
         axios.get(URL + "/getUsers").then((response) => {
             let users = response.data;
             let isValidUser = false;
             for (let user of users){
                 usernameServer = user.name.username;
                 passwordServer = user.password;
-                if (username === usernameServer && password === passwordServer){
+                if (username.value === usernameServer && password.value === passwordServer){
                     let goUserPage = document.querySelector(".userPage");
                     preDisplay = document.querySelector(".authentication");
                     hideShow(preDisplay, goUserPage, "block");
@@ -51,6 +53,8 @@ function login(){
                 window.alert("Username or password is incorrect.");
             }
         })
+    } else {
+        window.alert("Missing or invalid data.");
     }
 }
 
@@ -58,23 +62,24 @@ let loginBtn = document.querySelector(".loginBtn");
 loginBtn.addEventListener("click", login);
 
 // ----------------------------------------------------------------
-function register(){
-    let fName = document.querySelector("#fName").value;
-    let lName = document.querySelector("#lName").value;
-    let email = document.querySelector("#email").value;
-    let password = document.querySelector("#registerPwd").value;
-    let confirmPwd = document.querySelector("#confirmPwd").value;
+function register(e){
+    e.preventDefault();
+    let fName = document.querySelector("#fName");
+    let lName = document.querySelector("#lName");
+    let email = document.querySelector("#email");
+    let password = document.querySelector("#registerPwd");
+    let confirmPwd = document.querySelector("#confirmPwd");
     
-    let isValidData = (confirmPwd !== "") && (password === confirmPwd) && (password.length >= 5);
+    let isValidData = ((fName.checkValidity()) && (lName.checkValidity()) && (email.checkValidity()) && (confirmPwd.checkValidity()) && (password.checkValidity()) && (password.value === confirmPwd.value));
     if (isValidData){
         let newUser = {
             "name" : {
-                "firstName" : fName,
-                "lastName" : lName,
-                "username" : fName + lName
+                "firstName" : fName.value,
+                "lastName" : lName.value,
+                "username" : fName.value + lName.value
             },
-            "password" : password,
-            "email" : email,
+            "password" : password.value,
+            "email" : email.value,
             "conversations" : []
         };
 
@@ -91,17 +96,22 @@ function register(){
             if (isNewUser){
                 axios.post(URL + "/addNewUser", newUser).then((response) => {
                     console.log(response.data);
-                    window.alert("User is created.");
+                    window.alert("User is created.\n" + "Your username is : " + fName.value + lName.value);
+                    fName.value = "";
+                    lName.value = "";
+                    email.value = "";
+                    password.value = "";
+                    confirmPwd.value = "";
                     let goLoginPage = document.querySelector(".login");
                     hideShow(preDisplay, goLoginPage, "block");
                 })
             } else {
-                window.alert("User is existed.")
+                window.alert("User is existed")
             }
         })
 
     } else {
-        window.alert("Missing data...!");
+        window.alert("Missing or invalid data...!");
     }
 }
 
