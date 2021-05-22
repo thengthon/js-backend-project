@@ -45,7 +45,7 @@ function login(e){
                 if (username.value === usernameServer && password.value === passwordServer){
                     let goUserPage = document.querySelector(".userPage");
                     preDisplay = document.querySelector(".authentication");
-                    hideShow(preDisplay, goUserPage, "block");
+                    hideShow(preDisplay, goUserPage, "grid");
                     isValidUser = true;
                 }
             }

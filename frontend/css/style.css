@@ -7,6 +7,12 @@
 body {
     overflow: hidden;
 }
+
+html, body{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
 .authentication {
     position: absolute;
     background: url(https://thumbs.gfycat.com/AcrobaticResponsibleAsianelephant-size_restricted.gif) no-repeat;
@@ -117,21 +123,25 @@ button {
     box-shadow: 0px 0px 3px dodgerblue;
 }
 
-/* =============================userPage............................ */
+/* =============================USER PAGE=============================== */
 
 
 .userPage {
     display: grid;
-    grid-template-columns:25% 45% 30%;
-    max-height: 100%;
+    grid-template-columns:25% 50% 25%;
+    max-height: 100vh;
+    color: black;
 }
-
-.left {
-    background: rgb(145, 141, 141);
+.leftSide,
+.rightSide,
+.sms,
+.middle h3{
+    background: rgba(128, 128, 128, 0.103);
 }
-ul li {
+.leftSide ul li {
     padding: 15px;
-    background: rgb(92, 89, 89);
+    background: rgba(214, 211, 211, 0.795);
+    box-shadow: 0px 0px 1px 1px gray;
     margin: 20px;
     list-style: none;
     border-left: 5px solid #fff;
@@ -139,34 +149,38 @@ ul li {
     font-size: 20px;
 }
 li .fa {
-    font-size: 30px;
+    font-size: 25px;
     margin-right: 5px;
 }
-ul,
-.Receiver_and_Sender {
+
+ul {
     overflow: scroll;
     overflow-x: hidden;
-    max-height: 90vh;
+    max-height: 80vh;
+    list-style: none;
 }
-.chat_search {
-    background: rgb(224, 132, 11);
-    border-bottom: 3px solid blue;
-    margin-bottom: 10px;
+::-webkit-scrollbar {
+    width: 10px;
 }
+::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 5px;
+}
+
 .search{
-    width: 95%;
-    position: absolute;
-    margin: 30px 10px 0px 10px;
-    left: 50%;
-    transform: translate(-55%, -50%);
+    text-align: center;
+    margin: 10px;
     
 }
 .search input {
+    width: 75%;
     padding: 10px;
+    border: 1px solid rgba(128, 128, 128, 0.767);
 }
 .chat_search h1 {
-    padding: 30px;
-    color: dodgerblue;
+    padding: 30px 30px 10px 30px;
+    text-align: center;
+    font-size: 22px;
 }
 .chat_search,
 .middle h3 {
@@ -179,106 +193,149 @@ ul,
 .middle {
     border-right: 1px solid #fff;
 }
-
-
-.middle {
-    background: rgb(100, 93, 93);
-}
-.middle h3 {
-    padding: 30px;
-    text-align: center;
-    background: rgb(247, 116, 8);
-    border-bottom: 3px solid blue;
-    margin-bottom: 10px;
+.chat_search,
+.headerProfile{
+    height: 20%;
+    border-bottom: 1px solid gray;
 }
 
+.middle{
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+}
+.middleHead {
+    height: 8vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    border-bottom: 1px solid gray;
+}
+.headRight .fa,
+.partner{
+    font-size: 22px;
+    padding: 0 5px;
+}
 
-.Receiver_and_Sender {
+
+.messagesContainer {
     display: flex;
     justify-content: center;
-    width: 100%;
     flex-wrap: wrap;
-    position: relative;
+    width: 100%;
 }
-.Receiver,
-.Sender {
-    width: 90%;
-    display: flex;
+.receiver,
+.sender {
+    margin-left: 20px;
 }
-.Receiver_and_Sender .profile_user {
+.receiver .fa,
+.sender .fa {
     font-size: 40px;
 }
-.Receiver_and_Sender p {
+
+.sender .fa {
+    display: flex;
+    justify-content: flex-end;
+}
+.messagesContainer .profile_user {
+    font-size: 40px;
+}
+.messagesContainer p {
     margin: 20px 0px;
     padding: 10px 20px;
+    max-width: 90%;
 }
-.Receiver p {
+.receiver p {
+    max-width: 90%;
     background: rgb(21, 151, 226);
     border-radius: 0px 20px 20px 20px;
-    margin-left: 10px;
 }
-.Sender p {
+.sender p {
+    max-width: 90%;
     background: rgb(207, 119, 46);
     border-radius: 20px 0px 20px 20px;
-    margin-right: 10px;
 }
 
-.right {
-    background: rgba(163, 157, 157, 0.705);
-    width: 100%;
+.option,
+.send{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-.right .more {
-    width: 95%;
-    height: 20vh;
-    background: rgba(223, 108, 108, 0.877);
+.sms {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    align-items: center;
+    height: 12vh;
+    border-top: 1px solid gray;
+}
+#sms {
+    width: 80%;
+    height: 60%;
+    padding: 10px;
+    border: 1px solid gray;
+}
+
+.option,
+.send{
+    width: 40px;
+    height: 40px;
+    font-size: 25px;
+    border-radius: 50%;
+    border: 1px solid gray;
+    background: rgba(128, 128, 128, 0.685);
+}
+
+
+
+.rightSide .headerProfile {
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 0px auto;
     font-size: 60px;
     flex-direction: column;
-    border-bottom: 2px solid wheat;
-    
 }
-.more h1 {
+.headerProfile h1 {
     padding: 5px 0px;
-    color: rgb(76, 125, 175);
-
 }
-.fa {
+.darkMode{
+    width: 40%;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+}
+.darkMode input{
+    width: 30%;
+    height: 20px;
+}
+.darkMode input:hover{
+    box-shadow: none;
+}
+.fa,
+.userPage h1,
+.middle h3 {
     cursor: pointer;
 }
-.details {
-    width: 80%;
+.MenuList {
     margin: 15px auto;
 }
-.list {
+.item {
     background: rgba(214, 211, 211, 0.795);
-    box-shadow: 0px 0px 5px 2px #fff;
+    box-shadow: 0px 0px 1px 1px gray;
     display: flex;
     padding: 10px;
+    justify-content: center;
     margin: 20px;
 }
-.list .fa {
+.item .fa {
     font-size: 30px;
     color: rgb(117, 109, 108);
 }
-.list h5{
+.item p{
     color: rgb(77, 51, 51);
     margin-left: 10px;
     font-size: 20px;
 }
 
-.sms {
-    width: 100%;
-    position: relative;
-    background: #000;
-    bottom: 0px;
-}
-#sms {
-    height: 15vh;
-    width: 40%;
-    position: fixed;
-    bottom: 0px;
-    padding: 10px;
-}

@@ -11,7 +11,7 @@
     <script src="js/script.js" defer></script>
 </head>
 <body>
-    <div class="authentication">
+    <div class="authentication" style="display: none">
         <div class="login center">
             <div class="head">
                 <span>Login</span>
@@ -40,7 +40,7 @@
                 </div>
             </form>
         </div>
-        <div class="register center" style="display: none">
+        <div class="register center">
             <div class="head">
                 <span>Sign up</span>
                 <div class="profile">
@@ -73,56 +73,15 @@
             </form>
         </div>
     </div>
-    <div class="userPage" style="display: none">
-        <div class="left">
+    <div class="userPage">
+        <div class="leftSide">
             <div class="chat_search">
-                <h1>Chat....</h1>
+                <h1>CAMBO-CHAT</h1>
                 <div class="search">
                     <input type="search" name="search" id="search" placeholder="Search....">
                 </div>
             </div>
-            <ul>
-                <li><i class="fa fa-user-circle"></i>chum</li>
-                <li><i class="fa fa-user-circle"></i>chum</li>
-                <li><i class="fa fa-user-circle"></i>chum</li>
-                <li><i class="fa fa-user-circle"></i>chum</li>
-                <li><i class="fa fa-user-circle"></i>chum</li>
-                <li><i class="fa fa-user-circle"></i>chum</li>
-                <li><i class="fa fa-user-circle"></i>chum</li>
-                <li><i class="fa fa-user-circle"></i>chum</li>
-                <li><i class="fa fa-user-circle"></i>chum</li>
-                <li><i class="fa fa-user-circle"></i>chum</li>
-                <li><i class="fa fa-user-circle"></i>chum</li>
-                <li><i class="fa fa-user-circle"></i>chum</li>
-                <li><i class="fa fa-user-circle"></i>chum</li>
-                <li><i class="fa fa-user-circle"></i>chum</li>
-                <li><i class="fa fa-user-circle"></i>chum</li>
-                <li><i class="fa fa-user-circle"></i>chum</li>
-                <li><i class="fa fa-user-circle"></i>chum</li>
-                <li><i class="fa fa-user-circle"></i>chum</li>
-                <li><i class="fa fa-user-circle"></i>chum</li>
-                <li><i class="fa fa-user-circle"></i>chum</li>
-                <li><i class="fa fa-user-circle"></i>chum</li>
-                <li><i class="fa fa-user-circle"></i>chum</li>
-                <li><i class="fa fa-user-circle"></i>chum</li>
-                <li><i class="fa fa-user-circle"></i>chum</li>
-                <li><i class="fa fa-user-circle"></i>chum</li>
-                <li><i class="fa fa-user-circle"></i>chum</li>
-                <li><i class="fa fa-user-circle"></i>chum</li>
-                <li><i class="fa fa-user-circle"></i>chum</li>
-                <li><i class="fa fa-user-circle"></i>chum</li>
-                <li><i class="fa fa-user-circle"></i>chum</li>
-                <li><i class="fa fa-user-circle"></i>chum</li>
-                <li><i class="fa fa-user-circle"></i>chum</li>
-                <li><i class="fa fa-user-circle"></i>chum</li>
-                <li><i class="fa fa-user-circle"></i>chum</li>
-                <li><i class="fa fa-user-circle"></i>chum</li>
-                <li><i class="fa fa-user-circle"></i>chum</li>
-                <li><i class="fa fa-user-circle"></i>chum</li>
-                <li><i class="fa fa-user-circle"></i>chum</li>
-                <li><i class="fa fa-user-circle"></i>chum</li>
-                <li><i class="fa fa-user-circle"></i>chum</li>
-                <li><i class="fa fa-user-circle"></i>chum</li>
+            <ul class="containerUsers">
                 <li><i class="fa fa-user-circle"></i>chum</li>
                 <li><i class="fa fa-user-circle"></i>chum</li>
                 <li><i class="fa fa-user-circle"></i>chum</li>
@@ -138,63 +97,79 @@
             </ul>
         </div>
         <div class="middle">
-            <h3>Coversation!!!</h3>
-            <div class="Receiver_and_Sender">
-                <div class="Receiver">
+            <div class="middleHead">
+                <span class="partner">Chum</span>
+                <div class="headRight">
+                    <i class="fa fa-video-camera"></i>
+                    <i class="fa fa-phone"></i>
+                    <i class="fa fa-navicon"></i>
+                </div>
+            </div>
+            <ul class="messagesContainer">
+                <li class="receiver">
                     <div class="profile_user">
                         <i class="fa fa-user-circle"></i>
                     </div>
                     <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolor amet, nam quasi minima nihil iste animi! Adipisci, quaerat, fugiat autem officia, laborum assumenda sunt maxime a aliquid ad neque praesentium?</p>
-                </div>
-                <div class="Sender">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium, consectetur nostrum. Sequi suscipit voluptates beatae ad? Qui molestiae fugit deleniti velit assumenda? Quaerat perferendis quae impedit obcaecati dolorem ducimus quidem.</p>
+                </li>
+                <li class="sender">
                     <div class="profile_user">
                         <i class="fa fa-user-circle"></i>
                     </div>
-                </div>
-                <div class="Receiver">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium, consectetur nostrum. Sequi suscipit voluptates beatae ad? Qui molestiae fugit deleniti velit assumenda? Quaerat perferendis quae impedit obcaecati dolorem ducimus quidem.</p>
+                </li>
+                <li class="receiver">
                     <div class="profile_user">
                         <i class="fa fa-user-circle"></i>
                     </div>
                     <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolor amet, nam quasi minima nihil iste animi! Adipisci, quaerat, fugiat autem officia, laborum assumenda sunt maxime a aliquid ad neque praesentium?</p>
-                </div>
-                <div class="Sender">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium, consectetur nostrum. Sequi suscipit voluptates beatae ad? Qui molestiae fugit deleniti velit assumenda? Quaerat perferendis quae impedit obcaecati dolorem ducimus quidem.</p>
+                </li>
+                <li class="sender">
                     <div class="profile_user">
                         <i class="fa fa-user-circle"></i>
                     </div>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium, consectetur nostrum. Sequi suscipit voluptates beatae ad? Qui molestiae fugit deleniti velit assumenda? Quaerat perferendis quae impedit obcaecati dolorem ducimus quidem.</p>
+                </li>
+            </ul>
+            <div class="sms">
+                <div class="option">P
+                    <!-- <button type="button" class="bold"><b>B</b></e></em></button>
+                    <button type="button" class="italic"><em>I</em></button>
+                    <button type="button" class="emoji"><em>emoji</em></button> -->
                 </div>
-
-                <div class="sms">
-                    <textarea name="" id="sms"></textarea>
-                </div>
+                <input type="text" id="sms" placeholder="messages...">
+                <div class="send"><i class="fa fa-send-o"></i></div>
             </div>
         </div>
-        <div class="right">
-            <div class="more">
-                <h1>Hello</h1>
+        <div class="rightSide">
+            <div class="headerProfile">
                 <i class="fa fa-user-circle"></i>
+                <h1>Hello</h1>
             </div>
-            <div class="details">
-                <div class="list">
-                    <i class="fa fa-sign-out"></i>
-                    <h5>Sing out</h5>
+            <div class="MenuList">
+                <div class="darkMode">
+                    <input type="checkbox" id="dark">
+                    <label for="dark">Dark Mode</label>
                 </div>
-                <div class="list">
+                <div class="item">
                     <i class="fa fa fa-signal"></i>
-                    <h5>Data</h5>
+                    <p>Data</p>
                 </div>
-                <div class="list">
+                <div class="item">
                     <i class="fa fa-share-alt"></i>
-                    <h5>Share</h5>
+                    <p>Share</p>
                 </div>
-                <div class="list">
-                    <i class="fa fa-id-card-o"></i>
-                    <h5>Contacts</h5>
+                <div class="item">
+                    <i class="fa fa-shield"></i>
+                    <p>Privacy</p>
                 </div>
-                <div class="list">
+                <div class="item">
                     <i class="fa fa-gears"></i>
-                    <h5>Setting</h5>
+                    <p>Setting</p>
+                </div>
+                <div class="item">
+                    <i class="fa fa-sign-out"></i>
+                    <p>Sing out</p>
                 </div>
             </div>
         </div>
