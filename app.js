@@ -22,3 +22,5 @@ app.post("/addNewUser", (req, res) => {
     fs.writeFileSync("./dataServer/users.json", JSON.stringify(users));
     res.send("Add new user successfully...!");
 })
+
+

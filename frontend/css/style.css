@@ -4,6 +4,9 @@
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 15px;
 }
+body {
+    overflow: hidden;
+}
 .authentication {
     position: absolute;
     background: url(https://thumbs.gfycat.com/AcrobaticResponsibleAsianelephant-size_restricted.gif) no-repeat;
@@ -112,4 +115,170 @@ button {
 .redBtn:hover{
     border: 1px solid red;
     box-shadow: 0px 0px 3px dodgerblue;
+}
+
+/* =============================userPage............................ */
+
+
+.userPage {
+    display: grid;
+    grid-template-columns:25% 45% 30%;
+    max-height: 100%;
+}
+
+.left {
+    background: rgb(145, 141, 141);
+}
+ul li {
+    padding: 15px;
+    background: rgb(92, 89, 89);
+    margin: 20px;
+    list-style: none;
+    border-left: 5px solid #fff;
+    border-radius: 4px;
+    font-size: 20px;
+}
+li .fa {
+    font-size: 30px;
+    margin-right: 5px;
+}
+ul,
+.Receiver_and_Sender {
+    overflow: scroll;
+    overflow-x: hidden;
+    max-height: 90vh;
+}
+.chat_search {
+    background: rgb(224, 132, 11);
+    border-bottom: 3px solid blue;
+    margin-bottom: 10px;
+}
+.search{
+    width: 95%;
+    position: absolute;
+    margin: 30px 10px 0px 10px;
+    left: 50%;
+    transform: translate(-55%, -50%);
+    
+}
+.search input {
+    padding: 10px;
+}
+.chat_search h1 {
+    padding: 30px;
+    color: dodgerblue;
+}
+.chat_search,
+.middle h3 {
+    position: sticky;
+    top: 0px;
+    z-index: 9999;
+}
+
+.chat_search,
+.middle {
+    border-right: 1px solid #fff;
+}
+
+
+.middle {
+    background: rgb(100, 93, 93);
+}
+.middle h3 {
+    padding: 30px;
+    text-align: center;
+    background: rgb(247, 116, 8);
+    border-bottom: 3px solid blue;
+    margin-bottom: 10px;
+}
+
+
+.Receiver_and_Sender {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    flex-wrap: wrap;
+    position: relative;
+}
+.Receiver,
+.Sender {
+    width: 90%;
+    display: flex;
+}
+.Receiver_and_Sender .profile_user {
+    font-size: 40px;
+}
+.Receiver_and_Sender p {
+    margin: 20px 0px;
+    padding: 10px 20px;
+}
+.Receiver p {
+    background: rgb(21, 151, 226);
+    border-radius: 0px 20px 20px 20px;
+    margin-left: 10px;
+}
+.Sender p {
+    background: rgb(207, 119, 46);
+    border-radius: 20px 0px 20px 20px;
+    margin-right: 10px;
+}
+
+.right {
+    background: rgba(163, 157, 157, 0.705);
+    width: 100%;
+}
+.right .more {
+    width: 95%;
+    height: 20vh;
+    background: rgba(223, 108, 108, 0.877);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0px auto;
+    font-size: 60px;
+    flex-direction: column;
+    border-bottom: 2px solid wheat;
+    
+}
+.more h1 {
+    padding: 5px 0px;
+    color: rgb(76, 125, 175);
+
+}
+.fa {
+    cursor: pointer;
+}
+.details {
+    width: 80%;
+    margin: 15px auto;
+}
+.list {
+    background: rgba(214, 211, 211, 0.795);
+    box-shadow: 0px 0px 5px 2px #fff;
+    display: flex;
+    padding: 10px;
+    margin: 20px;
+}
+.list .fa {
+    font-size: 30px;
+    color: rgb(117, 109, 108);
+}
+.list h5{
+    color: rgb(77, 51, 51);
+    margin-left: 10px;
+    font-size: 20px;
+}
+
+.sms {
+    width: 100%;
+    position: relative;
+    background: #000;
+    bottom: 0px;
+}
+#sms {
+    height: 15vh;
+    width: 40%;
+    position: fixed;
+    bottom: 0px;
+    padding: 10px;
 }
