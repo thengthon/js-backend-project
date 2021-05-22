@@ -4,15 +4,8 @@
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 15px;
 }
-<<<<<<< HEAD
 body {
     overflow: hidden;
-=======
-html, body{
-    width: 100%;
-    height: 100%;
-    margin: 0;
->>>>>>> d2eff858f09e87c8852474f3a1df672fb3fdf67d
 }
 .authentication {
     position: absolute;
@@ -124,7 +117,6 @@ button {
     box-shadow: 0px 0px 3px dodgerblue;
 }
 
-<<<<<<< HEAD
 /* =============================userPage............................ */
 
 
@@ -290,129 +282,3 @@ ul,
     bottom: 0px;
     padding: 10px;
 }
-=======
-
-
-
-/* ======================================================== */
-.userPage{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: space-between;
-    background: rgba(128, 128, 128, 0.192);
-    overflow: hidden;
-}
-.contact{
-    width: 35%;
-    border-right: 1px solid;
-}
-.userProfile{
-    display: flex;
-    justify-content: space-between;
-    background: yellow;
-    padding: 20px;
-    position: relative;
-}
-
-.userHeader,
-.heading {
-    position: sticky;
-    top: 0;
-    z-index: 1;
-}
-.userProfile i{
-    font-size: 70px;
-}
-.userProfile span{
-    font-size: 30px;
-}
-.darkMode {
-    position: absolute;
-    right: 20px;
-    bottom: 25px;
-}
-#checkbox{
-    width: 15px;
-    height:15px;
-}
-.search {
-    text-align: center;
-}
-.search input {
-    border: 2px solid;
-    margin: 5px 0px;
-    width: 70%;
-    padding: 10px;
-}
-
-.userContainer{
-    height: 50%;
-}
-.userContainer, 
-.messageContainer{
-    background: gray;
-}
-
-
-.contact,
-.conversation{
-    height: 100%;
-    background: rgba(128, 128, 128, 0.637);
-}
-.conversation{
-    width: 64%;
-    border-left: 1px solid;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-.heading{
-    /* padding: 15px; */
-    width: 100%;
-    height: 10%;
-    box-sizing: border-box;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: yellow;
-    position: sticky;
-    top: 0px;
-}
-.messageContainer{
-    width: 100%;
-    height: 80%;
-    background: gray;
-    padding: 20px;
-    display: flex;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-}
-.messageContainer li{
-    width: 100%;
-}
-
-
-.sendPlace{
-    width: 100%;
-    height: 10%;
-    /* padding: 0px 20px; */
-    background: red;
-    position: sticky;
-    bottom: 0;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    box-sizing: border-box;
-}
-textarea{
-    width: 80%;
-    height: 100%;
-    vertical-align: middle;
-    resize: none;
-    border-radius: 15px;
-    /* border: 2px solid blue; */
-    outline: none;
-}
->>>>>>> d2eff858f09e87c8852474f3a1df672fb3fdf67d
