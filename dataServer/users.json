@@ -7,6 +7,7 @@
         },
         "password": "123chum",
         "email": "chumyoeurn@gmail.com",
+        "isInDarkMode": false,
         "conversations": []
     },
     {
@@ -17,6 +18,7 @@
         },
         "password": "123thon",
         "email": "thontheng@gmail.com",
+        "isInDarkMode": true,
         "conversations": []
     }
 ]

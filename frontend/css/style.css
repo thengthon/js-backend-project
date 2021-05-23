@@ -134,8 +134,7 @@ button {
 }
 .leftSide,
 .rightSide,
-.sms,
-.middle h3{
+.sms{
     background: rgba(128, 128, 128, 0.103);
 }
 .leftSide ul li {
@@ -315,7 +314,8 @@ ul {
 }
 .fa,
 .userPage h1,
-.middle h3 {
+.middle h3,
+.item {
     cursor: pointer;
 }
 .MenuList {

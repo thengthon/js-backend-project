@@ -1,6 +1,7 @@
 
 // _______CONSTANT VARIABLES____________________________________
-const URL = "https://cambo-chat.herokuapp.com";
+const URL = "http://localhost:5000";
+let isShowSetting = false;
 
 let preDisplay = document.querySelector(".login");
 
@@ -12,6 +13,7 @@ function hideShow(pre, next, display){
 
 let goRegister = document.querySelector(".goRegister");
 goRegister.addEventListener("click", () => {
+    preDisplay = document.querySelector(".login");
     let register = document.querySelector(".register");
     hideShow(preDisplay, register, "block");
 });
@@ -36,23 +38,29 @@ function login(e){
     
     let isValid = username.checkValidity() && password.checkValidity();
     if (isValid){
-        axios.get(URL + "/getUsers").then((response) => {
-            let users = response.data;
-            let isValidUser = false;
-            for (let user of users){
-                usernameServer = user.name.username;
-                passwordServer = user.password;
-                if (username.value === usernameServer && password.value === passwordServer){
-                    let goUserPage = document.querySelector(".userPage");
-                    preDisplay = document.querySelector(".authentication");
-                    hideShow(preDisplay, goUserPage, "grid");
-                    isValidUser = true;
-                }
-            }
-            if (!isValidUser){
+        let messsage = {
+            "username" : username.value,
+            "password" : password.value
+        };
+        axios.post(URL + "/getUsers", messsage).then((response) => {
+            let result = response.data;
+            if (result){
+                let goUserPage = document.querySelector(".userPage");
+                preDisplay = document.querySelector(".authentication");
+
+                document.querySelector(".headerProfile h1").textContent = username.value;
+                if (result.isInDarkMode){
+                    setDarkMode();
+                    document.querySelector("#dark").checked = "true";
+                };
+
+                hideShow(preDisplay, goUserPage, "grid");
+                username.value = "";
+                password.value = "";
+            } else {
                 window.alert("Username or password is incorrect.");
             }
-        })
+        });
     } else {
         window.alert("Missing or invalid data.");
     }
@@ -80,36 +88,23 @@ function register(e){
             },
             "password" : password.value,
             "email" : email.value,
+            "isInDarkMode" : false,
             "conversations" : []
         };
-
-        axios.get(URL + "/getUsers").then((response) => {
-            let users = response.data;
-            let isNewUser = true;
-            for (let user of users){
-                usernameServer = user.name.username;
-                passwordServer = user.password;
-                if (newUser.name.username === usernameServer && newUser.password === passwordServer){
-                    isNewUser = false;
-                }
-            }
-            if (isNewUser){
-                axios.post(URL + "/addNewUser", newUser).then((response) => {
-                    console.log(response.data);
-                    window.alert("User is created.\n" + "Your username is : " + fName.value + lName.value);
-                    fName.value = "";
-                    lName.value = "";
-                    email.value = "";
-                    password.value = "";
-                    confirmPwd.value = "";
-                    let goLoginPage = document.querySelector(".login");
-                    hideShow(preDisplay, goLoginPage, "block");
-                })
-            } else {
-                window.alert("User is existed")
+        axios.post(URL + "/addNewUser", newUser).then((response) => {
+            if (response.data){
+                window.alert("User is created.\n" + "Your username is : " + fName.value + lName.value);
+                fName.value = "";
+                lName.value = "";
+                email.value = "";
+                password.value = "";
+                confirmPwd.value = "";
+                let goLoginPage = document.querySelector(".login");
+                hideShow(preDisplay, goLoginPage, "block");
+            } else{
+                window.alert("User is existed");
             }
         })
-
     } else {
         window.alert("Missing or invalid data...!");
     }
@@ -117,3 +112,108 @@ function register(e){
 
 let RegisterBtn = document.querySelector(".registerBtn");
 RegisterBtn.addEventListener("click", register);
+
+// ---------------------------------------------------------------
+let signoutMenu = document.querySelector(".logout");
+signoutMenu.addEventListener("click", () => {
+    if (window.confirm("Are you loging out?")){
+        let loginPage = document.querySelector(".authentication");
+        preDisplay = document.querySelector(".userPage");
+        hideShow(preDisplay, loginPage, "block");
+    }
+})
+
+// ---------------------------------------------------------------
+let goSettingBtn = document.querySelector(".fa-navicon");
+goSettingBtn.addEventListener("click", () => {
+    if (!isShowSetting){
+        let setting = document.querySelector(".rightSide");
+        setting.style.display = "none";
+        isShowSetting = true;
+
+        document.querySelector(".userPage").style.gridTemplateColumns = "25% 75%";
+    } else{
+        let setting = document.querySelector(".rightSide");
+        setting.style.display = "block";
+        isShowSetting = false;
+
+        document.querySelector(".userPage").style.gridTemplateColumns = "25% 50% 25%";
+    };
+})
+
+// ---------------------------------------------------------------------------------------
+function setDarkMode(){
+    document.querySelector(".userPage").style.color = "#fff";
+    document.querySelector(".leftSide").style.background = "rgba(0, 0, 0, 0.788)";
+    document.querySelector(".middle").style.background = "rgba(0, 0, 0, 0.85)";
+    document.querySelector(".rightSide").style.background = "rgba(0, 0, 0, 0.788)";
+    let leftLi = document.querySelectorAll(".containerUsers li");
+    let rightItems = document.querySelectorAll(".item");
+    let itemsP = document.querySelectorAll(".item p");
+    let itemsI = document.querySelectorAll(".item i");
+    let search = document.querySelector("#search");
+    let sms = document.querySelector("#sms");
+    for (let li of leftLi){
+        li.style.background = "rgb(85, 85, 85)";
+    };
+    for (let item of rightItems){
+        item.style.background = "rgb(85, 85, 85)";
+    }
+    for (let p of itemsP){
+        p.style.color = "#fff";
+    }
+    for (let i of itemsI){
+        i.style.color = "#fff";
+    }
+
+    // search.style.placeholderColor = "#fff";
+    search.style.background = "rgb(85, 85, 85)";
+    // sms.style.placeholderColor = "#fff";
+    sms.style.background = "rgb(85, 85, 85)";
+}
+function unDarkMode(){
+    document.querySelector(".userPage").style.color = "#000";
+    document.querySelector(".leftSide").style.background = "rgba(128, 128, 128, 0.103)";
+    document.querySelector(".middle").style.background = "rgba(128, 128, 128, 0.103)";
+    document.querySelector(".rightSide").style.background = "rgba(128, 128, 128, 0.103)";
+    let leftLi = document.querySelectorAll(".containerUsers li");
+    let rightItems = document.querySelectorAll(".item");
+    let itemsP = document.querySelectorAll(".item p");
+    let itemsI = document.querySelectorAll(".item i");
+    let search = document.querySelector("#search");
+    let sms = document.querySelector("#sms");
+    for (let li of leftLi){
+        li.style.background = "rgba(214, 211, 211, 0.795)";
+    };
+    for (let item of rightItems){
+        item.style.background = "rgba(214, 211, 211, 0.795)";
+    }
+    for (let p of itemsP){
+        p.style.color = "";
+    }
+    for (let i of itemsI){
+        i.style.color = "";
+    }
+
+    // search.style.placeholderColor = "#fff";
+    search.style.background = "#fff";
+    // sms.style.placeholderColor = "#fff";
+    sms.style.background = "#fff";
+}
+let darkMode = document.querySelector("#dark");
+darkMode.addEventListener("click", () => {
+    let isDark = document.querySelector("#dark").checked;
+    if (isDark){
+        setDarkMode();
+    } else{
+        unDarkMode();
+    }
+    let accUsername = document.querySelector(".headerProfile h1").textContent;
+    let message = { 
+        "isDarkMode" : isDark,
+        "username" : accUsername
+    };
+    axios.post(URL + "/dark", message).then((response) => {
+        console.log(response.data);
+    });
+})
