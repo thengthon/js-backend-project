@@ -1,6 +1,6 @@
 
 // _______CONSTANT VARIABLES____________________________________
-const URL = "http://localhost:5000";
+const URL = "https://cambo-chat.herokuapp.com";
 let isShowSetting = false;
 
 let preDisplay = document.querySelector(".login");
