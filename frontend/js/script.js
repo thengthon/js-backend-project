@@ -1,6 +1,8 @@
-
 // _______CONSTANT VARIABLES____________________________________
 const URL = "https://cambo-chat.herokuapp.com";
+let myFirstName = "";
+let myLastName = "";
+let allPlayers = [];
 let isShowSetting = false;
 let showOption = true;
 
@@ -46,6 +48,10 @@ function login(e){
         axios.post(URL + "/getUsers", messsage).then((response) => {
             let result = response.data;
             if (result){
+                myFirstName = result.name.firstName;
+                myLastName = result.name.lastName;
+                allPlayers = result.chatWith;
+
                 let goUserPage = document.querySelector(".userPage");
                 preDisplay = document.querySelector(".authentication");
 
@@ -58,6 +64,10 @@ function login(e){
                 hideShow(preDisplay, goUserPage, "grid");
                 username.value = "";
                 password.value = "";
+
+                // ---- Display older partners ------------------------------------------
+                let existedPartner = result.chatWith;
+                displayUsers(existedPartner, existedPartner);
             } else {
                 window.alert("Username or password is incorrect.");
             }
@@ -173,6 +183,13 @@ function setDarkMode(){
     document.querySelector(".fa-gears").style.color = "#ffb037";
     document.querySelector(".fa-sign-out").style.color = "#ff005c";
 
+    document.querySelector(".headerProfile").style.borderBottom = "1px solid white";
+    document.querySelector(".chat_search").style.borderBottom = "1px solid white";
+    document.querySelector(".middleHead").style.borderBottom = "1px solid white";
+    document.querySelector(".middle").style.borderRight = "1px solid white";
+    document.querySelector(".middle").style.borderLeft = "1px solid white";
+    document.querySelector(".sms").style.borderTop = "1px solid white";
+
     search.style.background = "rgb(85, 85, 85)";
     search.style.color = "#fff";
 
@@ -203,10 +220,19 @@ function unDarkMode(){
         i.style.color = "";
     }
 
+    document.querySelector(".headerProfile").style.borderBottom = "1px solid gray";
+    document.querySelector(".chat_search").style.borderBottom = "1px solid gray";
+    document.querySelector(".middleHead").style.borderBottom = "1px solid gray";
+    document.querySelector(".middle").style.borderRight = "1px solid gray";
+    document.querySelector(".middle").style.borderLeft = "1px solid gray";
+    document.querySelector(".sms").style.borderTop = "1px solid gray";
+
     // search.style.placeholderColor = "#fff";
     search.style.background = "#fff";
+    search.style.color = "#000";
     // sms.style.placeholderColor = "#fff";
     sms.style.background = "#fff";
+    sms.style.color = "#000";
 }
 let darkMode = document.querySelector("#dark");
 darkMode.addEventListener("click", () => {
@@ -239,3 +265,83 @@ style.addEventListener("click", () => {
 })
 
 // ------------ Search Contact -----------------------------------------------
+function displayUsers(users, exist){
+    let ul = document.querySelector(".containerUsers");
+    ul.remove();
+
+    let newUl = document.createElement("ul");
+    newUl.className = "containerUsers";
+
+    for (let user of users){
+        let li = document.createElement("li");
+        let div = document.createElement("div");
+        let name = document.createElement("span");
+        let add = document.createElement("span");
+        let i = document.createElement("i");
+    
+        i.className = "fa fa-user-circle";
+        add.className = "add";
+
+        name.textContent = user;
+        add.textContent = "+";
+    
+        li.appendChild(div);
+
+        if (!exist.includes(user)){
+            li.appendChild(add);
+        }
+        div.appendChild(i);
+        div.appendChild(name);
+
+        newUl.appendChild(li);
+    }
+    document.querySelector(".leftSide").appendChild(newUl);
+}
+
+let searchBox = document.querySelector("#search");
+searchBox.addEventListener("click", () => {
+    axios.post("/getFirstnames", {"name" : myFirstName}).then((response) => {
+        let data = response.data;
+        let firstNames = data.all;
+        let existFirstNames = data.exist;
+        searchBox.addEventListener("keyup", () => {
+            let matchUsers = [];
+            let searchValue = document.querySelector("#search").value;
+            for (let firstName of firstNames){
+                if ((firstName.includes(searchValue)) && (searchValue !== "")){
+                    matchUsers.push(firstName);
+                } else if( searchValue === ""){
+                    matchUsers = allPlayers;
+                }
+            }
+            displayUsers(matchUsers, existFirstNames);
+
+            let container = document.querySelector(".containerUsers");
+            container.addEventListener("click", (event) => {
+                let isAdd = event.target.classList[0] === "add";
+                if (isAdd){
+                    let name = event.target.parentNode.firstChild.lastChild.textContent
+                    let allDisplayUsers = document.querySelectorAll(".containerUsers li");
+                    for (let user of allDisplayUsers){
+                        let displayUsername = user.firstChild.lastChild.textContent;
+                        if (displayUsername !== name){
+                            user.remove();
+                        }
+                    }
+                    allPlayers.push(name);
+                    displayUsers(allPlayers, allPlayers);
+
+                    document.querySelector("#search").value = "";
+                    document.querySelector(".partner").textContent = name;
+
+                    let message = {
+                        "sender" : myFirstName,
+                        "receiver" : name
+                    }
+                    axios.post("/addNewConversation", message).then((res) => console.log(res.data));
+                }
+            })
+        })
+    })
+
+})

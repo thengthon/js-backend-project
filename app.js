@@ -62,3 +62,58 @@ app.post("/dark", (req, res) => {
     fs.writeFileSync("./dataServer/users.json", JSON.stringify(users));
     res.send("Make change successfully...!");
 })
+
+// -------- Response FirstNames ----------------------------------------------
+app.post("/getFirstnames", (req, res) => {
+    let myFirstName = req.body.name;
+    console.log(myFirstName);
+    let users = JSON.parse(fs.readFileSync("./dataServer/users.json"));
+    let firstNames = [];
+    let firstNameExist = [];
+
+    for (let user of users){
+        if (user.name.firstName === myFirstName){
+            firstNameExist = user.chatWith;
+        } else{
+            firstNames.push(user.name.firstName);
+        }
+    };
+    let message = {
+        "all" : firstNames,
+        "exist" : firstNameExist
+    }
+    console.log(message);
+    res.send(message);
+})
+
+// -------- Add new conversation ---------------------------------------------
+app.post("/addNewConversation", (req, res) => {
+    let data = req.body;
+    let senderFirst = data.sender;
+    let receiverFirst = data.receiver;
+    let conversations = JSON.parse(fs.readFileSync("./dataServer/conversations.json"));
+    let newData = {
+        "id" : conversations.length + 1,
+        "starter" : senderFirst,
+        "receiver" : receiverFirst,
+        "messages" : []
+    };
+    conversations.push(newData);
+    fs.writeFileSync("./dataServer/conversations.json", JSON.stringify(conversations));
+
+    let users = JSON.parse(fs.readFileSync("./dataServer/users.json"));
+    for (let user of users){
+        let firstNameServer = user.name.firstName;
+        if (firstNameServer === senderFirst){
+            user.conversations.push(conversations.length);
+            user.chatWith.push(receiverFirst);
+        }
+        if (firstNameServer === receiverFirst){
+            user.conversations.push(conversations.length);
+            user.chatWith.push(senderFirst);
+        }
+    }
+    fs.writeFileSync("./dataServer/users.json", JSON.stringify(users));
+
+    res.send("Create new conversation successfully...!");
+})
