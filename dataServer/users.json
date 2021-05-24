@@ -8,7 +8,7 @@
         "password": "123chum",
         "email": "chumyoeurn@gmail.com",
         "isInDarkMode": false,
-        "conversations": []
+        "conversations": [1, 2, 3]
     },
     {
         "name": {

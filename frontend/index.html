@@ -11,7 +11,7 @@
     <script src="js/script.js" defer></script>
 </head>
 <body>
-    <div class="authentication">
+    <div class="authentication" style="display: none">
         <div class="login center">
             <div class="head">
                 <span>Login</span>
@@ -73,12 +73,12 @@
             </form>
         </div>
     </div>
-    <div class="userPage" style="display: none">
+    <div class="userPage">
         <div class="leftSide">
             <div class="chat_search">
                 <h1>CAMBO-CHAT</h1>
                 <div class="search">
-                    <input type="search" name="search" id="search" placeholder="Search....">
+                    <input type="search" name="search" id="search" placeholder="Search...." autocomplete="off">
                 </div>
             </div>
             <ul class="containerUsers">
@@ -132,12 +132,14 @@
                 </li>
             </ul>
             <div class="sms">
-                <div class="option">P
-                    <!-- <button type="button" class="bold"><b>B</b></e></em></button>
-                    <button type="button" class="italic"><em>I</em></button>
-                    <button type="button" class="emoji"><em>emoji</em></button> -->
-                </div>
-                <input type="text" id="sms" placeholder="messages...">
+                <i class="fa fa-smile-o styles">
+                    <div class="btns" style="display: none;">
+                        <button type="button" class="emoji"><i class="fa fa-smile-o"></i></button>
+                        <button type="button" class="bold"><b>B</b></e></em></button>
+                        <button type="button" class="italic"><em>I</em></button>
+                    </div>
+                </i>
+                <input type="text" id="sms" placeholder="messages..."  autocomplete="off">
                 <div class="send"><i class="fa fa-send-o"></i></div>
             </div>
         </div>
@@ -152,7 +154,7 @@
                     <label for="dark">Dark Mode</label>
                 </div>
                 <div class="item">
-                    <i class="fa fa fa-signal"></i>
+                    <i class="fa fa-signal"></i>
                     <p>Data</p>
                 </div>
                 <div class="item">

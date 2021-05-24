@@ -201,6 +201,7 @@ ul {
 .middle{
     border-left: 1px solid gray;
     border-right: 1px solid gray;
+    position: relative;
 }
 .middleHead {
     height: 8vh;
@@ -268,24 +269,18 @@ ul {
     align-items: center;
     height: 12vh;
     border-top: 1px solid gray;
+    position: relative;
 }
 #sms {
-    width: 80%;
+    width: 85%;
     height: 60%;
     padding: 10px;
     border: 1px solid gray;
 }
-
-.option,
+.sms .styles,
 .send{
-    width: 40px;
-    height: 40px;
-    font-size: 25px;
-    border-radius: 50%;
-    border: 1px solid gray;
-    background: rgba(128, 128, 128, 0.685);
+    font-size: 30px;
 }
-
 
 
 .rightSide .headerProfile {
@@ -331,11 +326,50 @@ ul {
 }
 .item .fa {
     font-size: 30px;
-    color: rgb(117, 109, 108);
 }
 .item p{
     color: rgb(77, 51, 51);
     margin-left: 10px;
     font-size: 20px;
+}
+
+.sms .styles {
+    position: relative;
+    z-index: 999;
+}
+
+
+.styles div {
+    display: flex;
+    margin: -170px 0px 0px -7px;
+    position: absolute;
+    flex-direction: column;
+   
+}
+.styles button {
+    margin: 0px 0px 5px 0px;
+    width: 40px;
+}
+.fa-phone,
+.fa-video-camera{
+    color: rgb(35, 211, 35);
+}
+.fa-signal {
+    color: #185adb;
+}
+.fa-share-alt {
+    color: #29bb89;
+}
+.fa-shield {
+    color: #e1701a;
+}
+.fa-gears {
+    color: #ffb037;
+}
+.fa-sign-out {
+    color: #ff005c;
+}
+.fa-phone:hover, .fa-video-camera:hover {
+    color: rgb(34, 190, 34);
 }
 

@@ -2,6 +2,7 @@
 // _______CONSTANT VARIABLES____________________________________
 const URL = "https://cambo-chat.herokuapp.com";
 let isShowSetting = false;
+let showOption = true;
 
 let preDisplay = document.querySelector(".login");
 
@@ -166,10 +167,17 @@ function setDarkMode(){
         i.style.color = "#fff";
     }
 
-    // search.style.placeholderColor = "#fff";
+    document.querySelector(".fa-signal").style.color = "#185adb";
+    document.querySelector(".fa-share-alt").style.color = "#29bb89";
+    document.querySelector(".fa-shield").style.color = "#e1701a";
+    document.querySelector(".fa-gears").style.color = "#ffb037";
+    document.querySelector(".fa-sign-out").style.color = "#ff005c";
+
     search.style.background = "rgb(85, 85, 85)";
-    // sms.style.placeholderColor = "#fff";
+    search.style.color = "#fff";
+
     sms.style.background = "rgb(85, 85, 85)";
+    sms.style.color = "#fff";
 }
 function unDarkMode(){
     document.querySelector(".userPage").style.color = "#000";
@@ -217,3 +225,17 @@ darkMode.addEventListener("click", () => {
         console.log(response.data);
     });
 })
+
+// ------ Style and Emoji ----------------------------------------------------
+let style = document.querySelector(".styles");
+style.addEventListener("click", () => {
+    if (showOption){
+        document.querySelector(".btns").style.display = "flex";
+        showOption = false;
+    } else{
+        document.querySelector(".btns").style.display = "none";
+        showOption = true;
+    }
+})
+
+// ------------ Search Contact -----------------------------------------------
