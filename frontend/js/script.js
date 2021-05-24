@@ -100,7 +100,8 @@ function register(e){
             "password" : password.value,
             "email" : email.value,
             "isInDarkMode" : false,
-            "conversations" : []
+            "conversations" : [],
+            "chatWith" : []
         };
         axios.post(URL + "/addNewUser", newUser).then((response) => {
             if (response.data){
