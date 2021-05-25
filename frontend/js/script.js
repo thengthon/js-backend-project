@@ -79,7 +79,10 @@ function login(e){
                         let messages = data.messages;
                         displayMessages(messages);
                     });
-                };
+                } else {
+                    document.querySelector(".partner").textContent = "Receive Name";
+                    displayMessages([]);
+                }
 
                 if (result.isInDarkMode){
                     setDarkMode();
@@ -498,7 +501,9 @@ leftSide.addEventListener("click", (e) => {
                 axios.post("/getConversation", mes).then((response) => {
                     let data = response.data;
                     let messages = data.messages;
-                    displayMessages(messages);
+                    for (let message of messages){
+                        displayNewMessage(message);
+                    }
                 });
             }, 2000);
         }
