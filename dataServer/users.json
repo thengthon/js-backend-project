@@ -8,12 +8,8 @@
         "password": "123chum",
         "email": "chumyoeurn@gmail.com",
         "isInDarkMode": false,
-        "conversations": [
-            1
-        ],
-        "chatWith": [
-            "thon"
-        ]
+        "conversations": [],
+        "chatWith": []
     },
     {
         "name": {
@@ -24,12 +20,8 @@
         "password": "123chum",
         "email": "chumyoeurn@gmail.com",
         "isInDarkMode": false,
-        "conversations": [
-            2
-        ],
-        "chatWith": [
-            "thon"
-        ]
+        "conversations": [],
+        "chatWith": []
     },
     {
         "name": {
@@ -40,13 +32,7 @@
         "password": "123thon",
         "email": "thontheng@gmail.com",
         "isInDarkMode": true,
-        "conversations": [
-            1,
-            2
-        ],
-        "chatWith": [
-            "chum",
-            "chumm"
-        ]
+        "conversations": [],
+        "chatWith": []
     }
 ]

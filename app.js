@@ -117,3 +117,38 @@ app.post("/addNewConversation", (req, res) => {
 
     res.send("Create new conversation successfully...!");
 })
+
+// -------- Send conversation ------------------------------------------------
+app.post("/getConversation", (req, res) => {
+    let names = req.body;
+    let sender = names.sender;
+    let receiver = names.receiver;
+
+    let conversations = JSON.parse(fs.readFileSync("./dataServer/conversations.json"));
+    for (let conv of conversations){
+        let starterServer = conv.starter;
+        let receiverServer = conv.receiver;
+        if (((sender === starterServer) && (receiver === receiverServer)) || ((sender === receiverServer) && (receiver === starterServer))){
+            res.send(conv);
+        };
+    }
+})
+
+// -------- Store New Message ------------------------------------------------
+app.post("/addNewMessage", (req, res) => {
+    let data = req.body;
+    let sender = data.sender;
+    let receiver = data.receiver;
+    let message = data.message;
+
+    let conversations = JSON.parse(fs.readFileSync("./dataServer/conversations.json"));
+    for (let conv of conversations){
+        let starterServer = conv.starter;
+        let receiverServer = conv.receiver;
+        if (((sender === starterServer) && (receiver === receiverServer)) || ((sender === receiverServer) && (receiver === starterServer))){
+            conv.messages.push(message);
+        };
+    }
+    fs.writeFileSync("./dataServer/conversations.json", JSON.stringify(conversations));
+    res.send("ok");
+})

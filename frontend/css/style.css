@@ -13,6 +13,7 @@ html, body{
     height: 100%;
     margin: 0;
 }
+/* ---------------- Authentication Page ------------------------------------------------------------------- */
 .authentication {
     position: absolute;
     background: url(https://thumbs.gfycat.com/AcrobaticResponsibleAsianelephant-size_restricted.gif) no-repeat;
@@ -122,6 +123,40 @@ button {
     border: 1px solid red;
     box-shadow: 0px 0px 3px dodgerblue;
 }
+/* ----- Verify Register --------------------------- */
+.verifyRegister{
+    width: 400px;
+    background: #fff;
+}
+.verifyRegister h1{
+    padding: 15px;
+    background: #29d11a;
+    text-align: center;
+    color: #fff;
+    font-size: 25px;
+}
+.bodyVerify{
+    text-align: center;
+    margin: 20px auto;
+}
+.bodyVerify p{
+    margin: 20px;
+}
+.bodyVerify .fa{
+    font-size: 50px;
+    color: #29d11a;
+    border: 1px solid #29d11a;
+    border-radius: 50%;
+    padding: 5px;
+}
+.verifyBtn button{
+    float: right;
+    margin: 20px;
+    color: #29d11a;
+}
+.verifyBtn{
+    border-top: 1px solid #29d11a;
+}
 
 /* =============================USER PAGE=============================== */
 
@@ -156,7 +191,7 @@ li .fa {
 ul {
     overflow: scroll;
     overflow-x: hidden;
-    max-height: 80vh;
+   height: 80vh;
     list-style: none;
 }
 ::-webkit-scrollbar {
@@ -231,44 +266,37 @@ ul {
     padding: 0 5px;
 }
 
-
-.messagesContainer {
+/* ----------------message block ---------------*/
+.messagesContainer{
+    padding: 0 15px;
+}
+.messagesContainer li{
     display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    width: 100%;
+    margin: 8px 0;
 }
-.receiver,
-.sender {
-    margin-left: 20px;
+.profileUser{
+    width: 7%;
 }
-.receiver .fa,
-.sender .fa {
-    font-size: 40px;
+.receiver .messageText{
+    background: #f4d9c6;
+    border-radius: 0 5px 5px 5px;
+}
+.sender .messageText{
+    background: #a3d8f4;
+    border-radius: 5px 0 5px 5px;
+}
+.messageText{
+    max-width: 82%;
+    padding: 2%;
+
 }
 
-.sender .fa {
+.sender{
     display: flex;
     justify-content: flex-end;
+    text-align: right;
 }
-.messagesContainer .profile_user {
-    font-size: 40px;
-}
-.messagesContainer p {
-    margin: 20px 0px;
-    padding: 10px 20px;
-    max-width: 90%;
-}
-.receiver p {
-    max-width: 90%;
-    background: rgb(21, 151, 226);
-    border-radius: 0px 20px 20px 20px;
-}
-.sender p {
-    max-width: 90%;
-    background: rgb(207, 119, 46);
-    border-radius: 20px 0px 20px 20px;
-}
+/* ---------------------------------------------- */
 
 .option,
 .send{
@@ -294,6 +322,23 @@ ul {
 .sms .styles,
 .send{
     font-size: 30px;
+}
+.sms .styles {
+    position: relative;
+    z-index: 999;
+}
+
+
+.styles div {
+    display: flex;
+    margin: -170px 0px 0px -7px;
+    position: absolute;
+    flex-direction: column;
+   
+}
+.styles button {
+    margin: 0px 0px 5px 0px;
+    width: 40px;
 }
 
 /* ----------- Right Side ------------------------------ */
@@ -343,28 +388,10 @@ ul {
     font-size: 30px;
 }
 .item p{
-    color: rgb(77, 51, 51);
     margin-left: 10px;
     font-size: 20px;
 }
 
-.sms .styles {
-    position: relative;
-    z-index: 999;
-}
-
-
-.styles div {
-    display: flex;
-    margin: -170px 0px 0px -7px;
-    position: absolute;
-    flex-direction: column;
-   
-}
-.styles button {
-    margin: 0px 0px 5px 0px;
-    width: 40px;
-}
 .fa-phone,
 .fa-video-camera{
     color: rgb(35, 211, 35);

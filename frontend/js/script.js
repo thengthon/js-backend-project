@@ -5,8 +5,12 @@ let myLastName = "";
 let allPlayers = [];
 let isShowSetting = false;
 let showOption = true;
-
+let isDarkMode = false;
 let preDisplay = document.querySelector(".login");
+let leftSide = document.querySelector(".leftSide");
+
+// -----------------------------------------------------------------
+
 
 function hideShow(pre, next, display){
     pre.style.display = "none";
@@ -33,12 +37,13 @@ exitBtn.addEventListener("click", () => {
     exit.style.display = "none";
 });
 
+
 // ----------------------------------------------------------------
 function login(e){
     e.preventDefault();
     let username = document.querySelector("#fullName");
     let password = document.querySelector("#pwd");
-    
+
     let isValid = username.checkValidity() && password.checkValidity();
     if (isValid){
         let messsage = {
@@ -56,18 +61,31 @@ function login(e){
                 preDisplay = document.querySelector(".authentication");
 
                 document.querySelector(".headerProfile h1").textContent = username.value;
-                if (result.isInDarkMode){
-                    setDarkMode();
-                    document.querySelector("#dark").checked = "true";
-                };
-
+                
                 hideShow(preDisplay, goUserPage, "grid");
                 username.value = "";
                 password.value = "";
-
+                
                 // ---- Display older partners ------------------------------------------
                 let existedPartner = result.chatWith;
                 displayUsers(existedPartner, existedPartner);
+                
+                // ---- Display older partners ------------------------------------------
+                if (existedPartner.length > 0){
+                    let firstPlayer = existedPartner[0];
+                    document.querySelector(".partner").textContent = firstPlayer;
+                    axios.post("/getConversation", {"sender" : myFirstName, "receiver" : firstPlayer}).then((response) => {
+                        let data = response.data;
+                        let messages = data.messages;
+                        displayMessages(messages);
+                    });
+                };
+
+                if (result.isInDarkMode){
+                    setDarkMode();
+                    isDarkMode = true;
+                    document.querySelector("#dark").checked = true;
+                };
             } else {
                 window.alert("Username or password is incorrect.");
             }
@@ -105,14 +123,21 @@ function register(e){
         };
         axios.post(URL + "/addNewUser", newUser).then((response) => {
             if (response.data){
-                window.alert("User is created.\n" + "Your username is : " + fName.value + lName.value);
                 fName.value = "";
                 lName.value = "";
                 email.value = "";
                 password.value = "";
                 confirmPwd.value = "";
-                let goLoginPage = document.querySelector(".login");
-                hideShow(preDisplay, goLoginPage, "block");
+                preDisplay = document.querySelector(".register")
+                let goVerify = document.querySelector(".verifyRegister");
+                document.querySelector(".bodyVerify span").textContent = newUser.name.username;
+                hideShow(preDisplay, goVerify, "block");
+
+                let verifyLogin = document.querySelector(".goLoginBtn");
+                verifyLogin.addEventListener("click", () => {
+                    let log = document.querySelector(".login");
+                    hideShow(preDisplay, log, "grid");
+                })
             } else{
                 window.alert("User is existed");
             }
@@ -191,6 +216,21 @@ function setDarkMode(){
     document.querySelector(".middle").style.borderLeft = "1px solid white";
     document.querySelector(".sms").style.borderTop = "1px solid white";
 
+    let allReText = document.querySelectorAll(".receiver .messageText");
+    let allSeText = document.querySelectorAll(".sender .messageText");
+    for (let re of allReText){
+        re.style.background = "rgba(128, 128, 128, 0.726)";
+    };
+    for (let se of allSeText){
+        se.style.background = "rgba(0, 128, 128, 0.685)";
+    };
+    
+    let styleBtns = document.querySelectorAll(".styles button");
+    for (let btn of styleBtns){
+        btn.style.color = "white";
+        btn.style.background = "rgba(0, 0, 0, 0.788)";
+    }
+
     search.style.background = "rgb(85, 85, 85)";
     search.style.color = "#fff";
 
@@ -200,7 +240,7 @@ function setDarkMode(){
 function unDarkMode(){
     document.querySelector(".userPage").style.color = "#000";
     document.querySelector(".leftSide").style.background = "rgba(128, 128, 128, 0.103)";
-    document.querySelector(".middle").style.background = "rgba(128, 128, 128, 0.103)";
+    document.querySelector(".middle").style.background = "#fff";
     document.querySelector(".rightSide").style.background = "rgba(128, 128, 128, 0.103)";
     let leftLi = document.querySelectorAll(".containerUsers li");
     let rightItems = document.querySelectorAll(".item");
@@ -228,6 +268,22 @@ function unDarkMode(){
     document.querySelector(".middle").style.borderLeft = "1px solid gray";
     document.querySelector(".sms").style.borderTop = "1px solid gray";
 
+    let styleBtns = document.querySelectorAll(".styles button");
+    for (let btn of styleBtns){
+        btn.style.color = "black";
+        btn.style.background = "";
+    }
+
+    let allReText = document.querySelectorAll(".receiver .messageText");
+    let allSeText = document.querySelectorAll(".sender .messageText");
+    for (let re of allReText){
+        re.style.background = "#f4d9c6";
+    };
+    for (let se of allSeText){
+        se.style.background = "#a3d8f4";
+    };
+
+
     // search.style.placeholderColor = "#fff";
     search.style.background = "#fff";
     search.style.color = "#000";
@@ -238,6 +294,7 @@ function unDarkMode(){
 let darkMode = document.querySelector("#dark");
 darkMode.addEventListener("click", () => {
     let isDark = document.querySelector("#dark").checked;
+    isDarkMode = isDark;
     if (isDark){
         setDarkMode();
     } else{
@@ -316,6 +373,9 @@ searchBox.addEventListener("click", () => {
                 }
             }
             displayUsers(matchUsers, existFirstNames);
+            if (isDarkMode){
+                setDarkMode();
+            };
 
             let container = document.querySelector(".containerUsers");
             container.addEventListener("click", (event) => {
@@ -331,6 +391,9 @@ searchBox.addEventListener("click", () => {
                     }
                     allPlayers.push(name);
                     displayUsers(allPlayers, allPlayers);
+                    if (isDarkMode){
+                        setDarkMode();
+                    };
 
                     document.querySelector("#search").value = "";
                     document.querySelector(".partner").textContent = name;
@@ -346,3 +409,125 @@ searchBox.addEventListener("click", () => {
     })
 
 })
+
+// ================ SEND & RECEIVE ================================================
+function displayMessages(messages){
+    document.querySelector(".messagesContainer").remove();
+    let container = document.createElement("ul");
+    container.className = "messagesContainer";
+    let middle = document.querySelector(".middle");
+    middle.insertBefore(container, middle.childNodes[2]);
+
+
+    for (let mes of messages){
+        let sender = mes.username;
+        let isSender = (sender === myFirstName + myLastName);
+
+        let li = document.createElement("li");
+        let profile = document.createElement("div");
+        let text = document.createElement("div");
+        let i = document.createElement("i");
+
+        i.className = "fa fa-user-circle";
+        profile.className = "profileUser";
+        text.className = "messageText";
+
+        profile.appendChild(i);
+        text.textContent = mes.message;
+
+        if (isSender){
+            li.className = "sender";
+            li.appendChild(text);
+            li.appendChild(profile);
+        } else{
+            li.className = "receiver";
+            li.appendChild(profile);
+            li.appendChild(text);
+        }
+        container.appendChild(li);
+    }
+    if (isDarkMode){
+        setDarkMode();
+    };
+};
+function displayNewMessage(oneMessage){
+    let container = document.querySelector(".messagesContainer");
+
+    let li = document.createElement("li");
+    let profile = document.createElement("div");
+    let text = document.createElement("div");
+    let i = document.createElement("i");
+
+    i.className = "fa fa-user-circle";
+    profile.className = "profileUser";
+    text.className = "messageText";
+
+    profile.appendChild(i);
+    text.textContent = oneMessage;
+
+    li.className = "sender";
+    li.appendChild(text);
+    li.appendChild(profile);
+
+    container.appendChild(li);
+    if (isDarkMode){
+        setDarkMode();
+    }
+};
+
+leftSide.addEventListener("click", (e) => {
+    let click = e.target;
+    let validTags = ["LI", "DIV", "SPAN", "I"];
+    let tag = click.tagName;
+    if (validTags.includes(tag)){
+        let name = "";
+        if (tag === "LI"){
+            name = click.firstChild.lastChild.textContent;
+        } else if ((tag === "DIV") && (click.classList.length === 0)) {
+            name = click.lastChild.textContent;
+        } else if ((tag === "SPAN") && (click.classList.length === 0)){
+            name = click.textContent;
+        } else if (tag === "I"){
+            name = click.parentNode.lastChild.textContent;
+        }
+        if (allPlayers.includes(name)){
+            document.querySelector(".partner").textContent = name;
+            let mes = {"sender" : myFirstName, "receiver" : name};
+            
+            stopInterval()
+            let loadMessages = setInterval(requestServer(mes), 5000);
+        }
+    }
+});
+
+function requestServer(partner){
+    axios.post("/getConversation", partner).then((response) => {
+        let data = response.data;
+        let messages = data.messages;
+        displayMessages(messages);
+    })
+}
+function stopInterval(){
+    clearInterval(loadMessages);
+}
+
+let sendBtn = document.querySelector(".send");
+sendBtn.addEventListener("click", () => {
+    let textMessage = document.querySelector("#sms").value;
+    if (textMessage !== ""){
+        displayNewMessage(textMessage);
+
+        let toSend = {
+            "sender" : myFirstName,
+            "receiver" : document.querySelector(".partner").textContent,
+            "message" : {
+                "username" : myFirstName + myLastName,
+                "message" : textMessage
+            }
+        };
+        axios.post("/addNewMessage", toSend);
+
+        document.querySelector("#sms").value = "";
+    }
+})
+// ================================================================================
