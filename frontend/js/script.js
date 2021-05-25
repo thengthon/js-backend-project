@@ -501,17 +501,14 @@ leftSide.addEventListener("click", (e) => {
                 axios.post("/getConversation", mes).then((response) => {
                     let data = response.data;
                     let messages = data.messages;
-                    for (let message of messages){
-                        displayNewMessage(message);
-                    }
+                    displayMessages(messages);
                 });
             }, 2000);
         }
     }
 });
 
-let sendBtn = document.querySelector(".send");
-sendBtn.addEventListener("click", () => {
+function sendMes(){
     let textMessage = document.querySelector("#sms").value;
     if (textMessage !== ""){
         displayNewMessage(textMessage);
@@ -528,5 +525,12 @@ sendBtn.addEventListener("click", () => {
 
         document.querySelector("#sms").value = "";
     }
-})
+}
+let sendBtn = document.querySelector(".send");
+sendBtn.addEventListener("click", sendMes);
+sendBtn.addEventListener("keyup", (e) => {
+    if (e.key === "Enter"){
+        sendMes();
+    }
+} );
 // ================================================================================
