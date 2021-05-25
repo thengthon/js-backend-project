@@ -489,23 +489,21 @@ leftSide.addEventListener("click", (e) => {
             name = click.textContent;
         } else if (tag === "I"){
             name = click.parentNode.lastChild.textContent;
-        }
+        };
         if (allPlayers.includes(name)){
             document.querySelector(".partner").textContent = name;
             let mes = {"sender" : myFirstName, "receiver" : name};
             
-            setInterval(requestServer(mes), 5000);
+            setInterval(() =>{
+                axios.post("/getConversation", mes).then((response) => {
+                    let data = response.data;
+                    let messages = data.messages;
+                    displayMessages(messages);
+                });
+            }, 2000);
         }
     }
 });
-
-function requestServer(partner){
-    axios.post("/getConversation", partner).then((response) => {
-        let data = response.data;
-        let messages = data.messages;
-        displayMessages(messages);
-    })
-}
 
 let sendBtn = document.querySelector(".send");
 sendBtn.addEventListener("click", () => {
