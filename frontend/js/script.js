@@ -494,8 +494,7 @@ leftSide.addEventListener("click", (e) => {
             document.querySelector(".partner").textContent = name;
             let mes = {"sender" : myFirstName, "receiver" : name};
             
-            stopInterval()
-            let loadMessages = setInterval(requestServer(mes), 5000);
+            setInterval(requestServer(mes), 5000);
         }
     }
 });
@@ -506,9 +505,6 @@ function requestServer(partner){
         let messages = data.messages;
         displayMessages(messages);
     })
-}
-function stopInterval(){
-    clearInterval(loadMessages);
 }
 
 let sendBtn = document.querySelector(".send");
