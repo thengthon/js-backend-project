@@ -1,5 +1,5 @@
 // _______CONSTANT VARIABLES____________________________________
-const URL = "https://cambo-chat.herokuapp.com";
+const URL = "https://cambo-chat.herokuapp.app";
 let myFirstName = "";
 let myLastName = "";
 let allPlayers = [];
@@ -401,6 +401,8 @@ searchBox.addEventListener("click", () => {
 
                     document.querySelector("#search").value = "";
                     document.querySelector(".partner").textContent = name;
+                    displayMessages([]);
+                    mes = {"sender" : myFirstName, "receiver" : name};
 
                     let message = {
                         "sender" : myFirstName,
