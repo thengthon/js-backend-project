@@ -137,6 +137,7 @@ app.post("/getConversation", (req, res) => {
             res.send(conv.messages);
         };
     }
+    fs.writeFileSync("./dataServer/conversations.json", JSON.stringify(conversations));
 })
 // ------- Send New Message Only ---------------------------------------------
 app.post("/updateConversation", (req, res) => {
