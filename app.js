@@ -94,8 +94,8 @@ app.post("/addNewConversation", (req, res) => {
     let conversations = JSON.parse(fs.readFileSync("./dataServer/conversations.json"));
     let newData = {
         "id" : conversations.length + 1,
-        "starter" : senderFirst,
-        "receiver" : receiverFirst,
+        "starter" : { "name" : senderFirst, "id" : -1},
+        "receiver" : { "name" : receiverFirst, "id" : -1},
         "messages" : []
     };
     conversations.push(newData);
@@ -107,11 +107,11 @@ app.post("/addNewConversation", (req, res) => {
         if (firstNameServer === senderFirst){
             user.conversations.push(conversations.length);
             user.chatWith.push(receiverFirst);
-        }
+        };
         if (firstNameServer === receiverFirst){
             user.conversations.push(conversations.length);
             user.chatWith.push(senderFirst);
-        }
+        };
     }
     fs.writeFileSync("./dataServer/users.json", JSON.stringify(users));
 
@@ -126,12 +126,49 @@ app.post("/getConversation", (req, res) => {
 
     let conversations = JSON.parse(fs.readFileSync("./dataServer/conversations.json"));
     for (let conv of conversations){
-        let starterServer = conv.starter;
-        let receiverServer = conv.receiver;
+        let starterServer = conv.starter.name;
+        let receiverServer = conv.receiver.name;
         if (((sender === starterServer) && (receiver === receiverServer)) || ((sender === receiverServer) && (receiver === starterServer))){
-            res.send(conv);
+            if (sender === starterServer){
+                conv.starter.id = conv.messages.length - 1;
+            } else{
+                conv.receiver.id = conv.messages.length - 1;
+            };
+            res.send(conv.messages);
         };
     }
+})
+// ------- Send New Message Only ---------------------------------------------
+app.post("/updateConversation", (req, res) => {
+    let names = req.body;
+    let sender = names.sender;
+    let receiver = names.receiver;
+
+    let conversations = JSON.parse(fs.readFileSync("./dataServer/conversations.json"));
+    for (let conv of conversations){
+        let starterServer = conv.starter.name;
+        let receiverServer = conv.receiver.name;
+        
+        if (((sender === starterServer) && (receiver === receiverServer)) || ((sender === receiverServer) && (receiver === starterServer))){
+            let id = -1;
+            if (sender === starterServer){
+                id = conv.starter.id;
+            } else{
+                id = conv.receiver.id;
+            };
+            // -----------------------------------------
+            let newMessages = conv.messages.slice(id+1, conv.messages.length)
+            // -----------------------------------------
+
+            if (sender === starterServer){
+                conv.starter.id = conv.messages.length - 1;
+            } else{
+                conv.receiver.id = conv.messages.length - 1;
+            };
+            res.send(newMessages);
+        };
+    };
+    fs.writeFileSync("./dataServer/conversations.json", JSON.stringify(conversations)); 
 })
 
 // -------- Store New Message ------------------------------------------------
@@ -143,9 +180,10 @@ app.post("/addNewMessage", (req, res) => {
 
     let conversations = JSON.parse(fs.readFileSync("./dataServer/conversations.json"));
     for (let conv of conversations){
-        let starterServer = conv.starter;
-        let receiverServer = conv.receiver;
+        let starterServer = conv.starter.name;
+        let receiverServer = conv.receiver.name;
         if (((sender === starterServer) && (receiver === receiverServer)) || ((sender === receiverServer) && (receiver === starterServer))){
+            message.id = conv.messages.length;
             conv.messages.push(message);
         };
     }

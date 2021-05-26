@@ -1,5 +1,5 @@
 // _______CONSTANT VARIABLES____________________________________
-const URL = "https://cambo-chat.herokuapp.com";
+const URL = "https://cambo-chat.herokuap.com";
 let myFirstName = "";
 let myLastName = "";
 let allPlayers = [];
@@ -8,6 +8,7 @@ let showOption = true;
 let isDarkMode = false;
 let preDisplay = document.querySelector(".login");
 let leftSide = document.querySelector(".leftSide");
+let mes = "";
 
 // -----------------------------------------------------------------
 
@@ -74,15 +75,15 @@ function login(e){
                 if (existedPartner.length > 0){
                     let firstPlayer = existedPartner[0];
                     document.querySelector(".partner").textContent = firstPlayer;
-                    axios.post("/getConversation", {"sender" : myFirstName, "receiver" : firstPlayer}).then((response) => {
-                        let data = response.data;
-                        let messages = data.messages;
+                    mes = {"sender" : myFirstName, "receiver" : firstPlayer};
+                    axios.post("/getConversation", mes).then((response) => {
+                        let messages = response.data;
                         displayMessages(messages);
                     });
                 } else {
                     document.querySelector(".partner").textContent = "Receive Name";
                     displayMessages([]);
-                }
+                };
 
                 if (result.isInDarkMode){
                     setDarkMode();
@@ -91,11 +92,11 @@ function login(e){
                 };
             } else {
                 window.alert("Username or password is incorrect.");
-            }
+            };
         });
     } else {
         window.alert("Missing or invalid data.");
-    }
+    };
 }
 
 let loginBtn = document.querySelector(".loginBtn");
@@ -446,12 +447,48 @@ function displayMessages(messages){
             li.className = "receiver";
             li.appendChild(profile);
             li.appendChild(text);
-        }
+        };
         container.appendChild(li);
-    }
+    };
     if (isDarkMode){
         setDarkMode();
     };
+    goBottom();
+};
+function updateMes(newMessages){
+    let container = document.querySelector(".messagesContainer");
+
+    for (let mes of newMessages){
+        let sender = mes.username;
+        let isSender = (sender === myFirstName + myLastName);
+
+        let li = document.createElement("li");
+        let profile = document.createElement("div");
+        let text = document.createElement("div");
+        let i = document.createElement("i");
+
+        i.className = "fa fa-user-circle";
+        profile.className = "profileUser";
+        text.className = "messageText";
+
+        profile.appendChild(i);
+        text.textContent = mes.message;
+
+        if (isSender){
+            li.className = "sender";
+            li.appendChild(text);
+            li.appendChild(profile);
+        } else{
+            li.className = "receiver";
+            li.appendChild(profile);
+            li.appendChild(text);
+        };
+        container.appendChild(li);
+    };
+    if (isDarkMode){
+        setDarkMode();
+    };
+    goBottom();
 };
 function displayNewMessage(oneMessage){
     let container = document.querySelector(".messagesContainer");
@@ -475,8 +512,9 @@ function displayNewMessage(oneMessage){
     container.appendChild(li);
     if (isDarkMode){
         setDarkMode();
-    }
-};
+    };
+    goBottom();
+}
 
 leftSide.addEventListener("click", (e) => {
     let click = e.target;
@@ -495,29 +533,34 @@ leftSide.addEventListener("click", (e) => {
         };
         if (allPlayers.includes(name)){
             document.querySelector(".partner").textContent = name;
-            let mes = {"sender" : myFirstName, "receiver" : name};
-            
-            setInterval ( () => {
-                axios.post("/getConversation", mes).then((response) => {
-                    let data = response.data;
-                    let messages = data.messages;
-                    displayMessages(messages);
-                });
-                2000;
-                let mCt = document.querySelector(".messagesContainer");
-                if (scrollDown) {
-                    mCt.scrollTop = mCt.scrollHeight - mCt.clientHeight;
-                }
-            })
+            mes = {"sender" : myFirstName, "receiver" : name};
+            axios.post("/getConversation", mes).then((response) => {
+                let messages = response.data;
+                displayMessages(messages);
+            });
         }
     }
 });
-
+let startChat = function (){
+    setInterval( () => {
+        if (mes !== ""){
+            axios.post("/updateConversation", mes).then((response) => {
+                let newMes = response.data;
+                if (newMes.length > 0){
+                    updateMes(newMes);
+                }
+            });
+        };
+    }, 1000);
+};
+function goBottom(){
+    let mCt = document.querySelector(".messagesContainer");
+    mCt.scrollTop = mCt.scrollHeight - mCt.clientHeight;
+}
+let numOfMes = document.querySelectorAll(".messagesContainer li").length;
 function sendMes(){
     let textMessage = document.querySelector("#sms").value;
     if (textMessage !== ""){
-        displayNewMessage(textMessage);
-
         let toSend = {
             "sender" : myFirstName,
             "receiver" : document.querySelector(".partner").textContent,
@@ -539,3 +582,4 @@ sendBtn.addEventListener("click", sendMes);
 //     }
 // });
 // ================================================================================
+startChat()
