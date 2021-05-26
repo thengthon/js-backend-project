@@ -1,5 +1,5 @@
 // _______CONSTANT VARIABLES____________________________________
-const URL = "https://cambo-chat.herokuap.com";
+const URL = "https://cambo-chat.herokuapp.com";
 let myFirstName = "";
 let myLastName = "";
 let allPlayers = [];
