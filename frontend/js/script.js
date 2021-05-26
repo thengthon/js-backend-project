@@ -1,5 +1,5 @@
 // _______CONSTANT VARIABLES____________________________________
-const URL = "https://cambo-chat.herokuapp.com";
+const URL = "https://192.168.1.39";
 let myFirstName = "";
 let myLastName = "";
 let allPlayers = [];
@@ -497,13 +497,18 @@ leftSide.addEventListener("click", (e) => {
             document.querySelector(".partner").textContent = name;
             let mes = {"sender" : myFirstName, "receiver" : name};
             
-            setInterval(() =>{
+            setInterval ( () => {
                 axios.post("/getConversation", mes).then((response) => {
                     let data = response.data;
                     let messages = data.messages;
                     displayMessages(messages);
                 });
-            }, 2000);
+                2000;
+                let mCt = document.querySelector(".messagesContainer");
+                if (scrollDown) {
+                    mCt.scrollTop = mCt.scrollHeight - mCt.clientHeight;
+                }
+            })
         }
     }
 });
@@ -528,9 +533,9 @@ function sendMes(){
 }
 let sendBtn = document.querySelector(".send");
 sendBtn.addEventListener("click", sendMes);
-sendBtn.addEventListener("keyup", (e) => {
-    if (e.key === "Enter"){
-        sendMes();
-    }
-} );
+// sendBtn.addEventListener("keyup", (e) => {
+//     if (e.key === "Enter"){
+//         sendMes();
+//     }
+// });
 // ================================================================================
