@@ -1,8 +1,43 @@
 const express = require("express");
-const fs = require("fs");
 const app = express();
-const conversationPath = "./dataServer/conversations.json";
-const userPath = "./dataServer/users.json";
+let users = [
+    {   name: {
+            "firstName": "chum",
+            "lastName": "yoeurn",
+            "username": "chumyoeurn"
+        },
+        password: "123chum",
+        email: "chumyoeurn@gmail.com",
+        isInDarkMode: false,
+        conversations: [],
+        chatWith: []
+    },
+    {
+        name: {
+            firstName: "chumm",
+            lastName: "yoeurn",
+            username: "chumyoeurn"
+        },
+        password: "123chumm",
+        email: "chumyoeurn@gmail.com",
+        isInDarkMode: false,
+        conversations: [],
+        chatWith: []
+    },
+    {
+        name: {
+            firstName: "thon",
+            lastName: "theng",
+            username: "thontheng"
+        },
+        password: "123thon",
+        email: "thontheng@gmail.com",
+        isInDarkMode: true,
+        conversations: [],
+        chatWith: []
+    }
+];
+let conversations = [];
 
 app.listen(process.env.PORT || 5000, () => console.log("Server is running...!"))
 
@@ -16,7 +51,6 @@ app.post("/getUsers", (req, res) => {
     let username = userReq.username;
     let password = userReq.password;
     
-    let users = JSON.parse(fs.readFileSync(userPath));
     let isValidUser = false;
     for (let user of users){
         let usernameServer = user.name.username;
@@ -48,28 +82,25 @@ app.post("/addNewUser", (req, res) => {
         res.send("false");
     }
 })
-
+// ---------------------------------------------------------------------------
 // -------- Dark Mode ---------------------------------------------------------
 app.post("/dark", (req, res) => {
     let data = req.body;
     let username = data.username;
     let value = data.isDarkMode;
-    let users = JSON.parse(fs.readFileSync(userPath));
     for (let user of users){
         let usernameServer = user.name.username;
         if (username === usernameServer){
             user.isInDarkMode = value;
         }
     }
-    fs.writeFileSync(userPath, JSON.stringify(users));
     res.send("Make change successfully...!");
 })
-
+// ---------------------------------------------------------------------------
 // -------- Response FirstNames ----------------------------------------------
 app.post("/getFirstnames", (req, res) => {
     let myFirstName = req.body.name;
-    console.log(myFirstName);
-    let users = JSON.parse(fs.readFileSync(userPath));
+
     let firstNames = [];
     let firstNameExist = [];
 
@@ -84,16 +115,16 @@ app.post("/getFirstnames", (req, res) => {
         "all" : firstNames,
         "exist" : firstNameExist
     }
-    console.log(message);
     res.send(message);
 })
+// ---------------------------------------------------------------------------
 
 // -------- Add new conversation ---------------------------------------------
 app.post("/addNewConversation", (req, res) => {
     let data = req.body;
     let senderFirst = data.sender;
     let receiverFirst = data.receiver;
-    let conversations = JSON.parse(fs.readFileSync(conversationPath));
+
     let newData = {
         "id" : conversations.length + 1,
         "starter" : { "name" : senderFirst, "id" : -1},
@@ -101,9 +132,7 @@ app.post("/addNewConversation", (req, res) => {
         "messages" : []
     };
     conversations.push(newData);
-    fs.writeFileSync(conversationPath, JSON.stringify(conversations));
 
-    let users = JSON.parse(fs.readFileSync(userPath));
     for (let user of users){
         let firstNameServer = user.name.firstName;
         if (firstNameServer === senderFirst){
@@ -115,18 +144,16 @@ app.post("/addNewConversation", (req, res) => {
             user.chatWith.push(senderFirst);
         };
     }
-    fs.writeFileSync(userPath, JSON.stringify(users));
 
     res.send("Create new conversation successfully...!");
 })
-
+// --------------------------------------------------------------------------
 // -------- Send conversation ------------------------------------------------
 app.post("/getConversation", (req, res) => {
     let names = req.body;
     let sender = names.sender;
     let receiver = names.receiver;
 
-    let conversations = JSON.parse(fs.readFileSync(conversationPath));
     for (let conv of conversations){
         let starterServer = conv.starter.name;
         let receiverServer = conv.receiver.name;
@@ -139,15 +166,14 @@ app.post("/getConversation", (req, res) => {
             res.send(conv.messages);
         };
     }
-    fs.writeFileSync(conversationPath, JSON.stringify(conversations));
 })
+// --------------------------------------------------------------------------
 // ------- Send New Message Only ---------------------------------------------
 app.post("/updateConversation", (req, res) => {
     let names = req.body;
     let sender = names.sender;
     let receiver = names.receiver;
 
-    let conversations = JSON.parse(fs.readFileSync(conversationPath));
     for (let conv of conversations){
         let starterServer = conv.starter.name;
         let receiverServer = conv.receiver.name;
@@ -171,8 +197,8 @@ app.post("/updateConversation", (req, res) => {
             };
         };
     };
-    fs.writeFileSync(conversationPath, JSON.stringify(conversations)); 
 })
+// ---------------------------------------------------------------------------
 
 // -------- Store New Message ------------------------------------------------
 app.post("/addNewMessage", (req, res) => {
@@ -181,7 +207,6 @@ app.post("/addNewMessage", (req, res) => {
     let receiver = data.receiver;
     let message = data.message;
 
-    let conversations = JSON.parse(fs.readFileSync(conversationPath));
     for (let conv of conversations){
         let starterServer = conv.starter.name;
         let receiverServer = conv.receiver.name;
@@ -191,6 +216,6 @@ app.post("/addNewMessage", (req, res) => {
             console.log(conv.messages);
         };
     }
-    fs.writeFileSync(conversationPath, JSON.stringify(conversations));
     res.send("ok");
 })
+// ---------------------------------------------------------------------------
