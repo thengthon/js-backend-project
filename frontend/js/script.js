@@ -76,7 +76,7 @@ function login(e){
                     let firstPlayer = existedPartner[0];
                     document.querySelector(".partner").textContent = firstPlayer;
                     mes = {"sender" : myFirstName, "receiver" : firstPlayer};
-                    axios.post("/getConversation", mes).then((response) => {
+                    axios.post(URL + "/getConversation", mes).then((response) => {
                         let messages = response.data;
                         displayMessages(messages);
                     });
