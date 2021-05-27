@@ -1,8 +1,8 @@
 const express = require("express");
 const fs = require("fs");
 const app = express();
-const conversationPath = "https://cambo-chat.herokuapp.com/dataServer/conversations.json";
-const userPath = "https://cambo-chat.herokuapp.com/dataServer/users.json";
+const conversationPath = "./dataServer/conversations.json";
+const userPath = "./dataServer/users.json";
 
 app.listen(process.env.PORT || 5000, () => console.log("Server is running...!"))
 
