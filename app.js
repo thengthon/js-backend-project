@@ -65,23 +65,21 @@ app.post("/getUsers", (req, res) => {
 // --------- Register --------------------------------------------------------
 app.post("/addNewUser", (req, res) => {
     let newUser = req.body;
-    let users = JSON.parse(fs.readFileSync(userPath));
+
     let isNewUser = true;
     for (let user of users){
         let usernameServer = user.name.username;
-        let passwordServer = user.password;
-        if (newUser.name.username === usernameServer && newUser.password === passwordServer){
+        if (newUser.name.username === usernameServer){
             isNewUser = false;
-        }
-    }
+        };
+    };
     if (isNewUser){
         users.push(newUser);
-        fs.writeFileSync(userPath, JSON.stringify(users));
         res.send("true");
     } else{
         res.send("false");
-    }
-})
+    };
+});
 // ---------------------------------------------------------------------------
 // -------- Dark Mode ---------------------------------------------------------
 app.post("/dark", (req, res) => {
