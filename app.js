@@ -1,6 +1,7 @@
 const express = require("express");
 const fs = require("fs");
 const app = express();
+const conversationPath = "https://cambo-chat.herokuapp.com/dataServer/conversations.json";
 
 app.listen(process.env.PORT || 5000, () => console.log("Server is running...!"))
 
@@ -91,7 +92,7 @@ app.post("/addNewConversation", (req, res) => {
     let data = req.body;
     let senderFirst = data.sender;
     let receiverFirst = data.receiver;
-    let conversations = JSON.parse(fs.readFileSync("./dataServer/conversations.json"));
+    let conversations = JSON.parse(fs.readFileSync(conversationPath));
     let newData = {
         "id" : conversations.length + 1,
         "starter" : { "name" : senderFirst, "id" : -1},
@@ -99,7 +100,7 @@ app.post("/addNewConversation", (req, res) => {
         "messages" : []
     };
     conversations.push(newData);
-    fs.writeFileSync("./dataServer/conversations.json", JSON.stringify(conversations));
+    fs.writeFileSync(conversationPath, JSON.stringify(conversations));
 
     let users = JSON.parse(fs.readFileSync("./dataServer/users.json"));
     for (let user of users){
@@ -179,7 +180,7 @@ app.post("/addNewMessage", (req, res) => {
     let receiver = data.receiver;
     let message = data.message;
 
-    let conversations = JSON.parse(fs.readFileSync("./dataServer/conversations.json"));
+    let conversations = JSON.parse(fs.readFileSync(conversationPath));
     for (let conv of conversations){
         let starterServer = conv.starter.name;
         let receiverServer = conv.receiver.name;
@@ -188,6 +189,6 @@ app.post("/addNewMessage", (req, res) => {
             conv.messages.push(message);
         };
     }
-    fs.writeFileSync("./dataServer/conversations.json", JSON.stringify(conversations));
+    fs.writeFileSync(conversationPath, JSON.stringify(conversations));
     res.send("ok");
 })
