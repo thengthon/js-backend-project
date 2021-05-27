@@ -2,6 +2,7 @@ const express = require("express");
 const fs = require("fs");
 const app = express();
 const conversationPath = "https://cambo-chat.herokuapp.com/dataServer/conversations.json";
+const userPath = "https://cambo-chat.herokuapp.com/dataServer/users.json";
 
 app.listen(process.env.PORT || 5000, () => console.log("Server is running...!"))
 
@@ -15,7 +16,7 @@ app.post("/getUsers", (req, res) => {
     let username = userReq.username;
     let password = userReq.password;
     
-    let users = JSON.parse(fs.readFileSync("./dataServer/users.json"));
+    let users = JSON.parse(fs.readFileSync(userPath));
     let isValidUser = false;
     for (let user of users){
         let usernameServer = user.name.username;
@@ -30,7 +31,7 @@ app.post("/getUsers", (req, res) => {
 // --------- Register --------------------------------------------------------
 app.post("/addNewUser", (req, res) => {
     let newUser = req.body;
-    let users = JSON.parse(fs.readFileSync("./dataServer/users.json"));
+    let users = JSON.parse(fs.readFileSync(userPath));
     let isNewUser = true;
     for (let user of users){
         let usernameServer = user.name.username;
@@ -41,7 +42,7 @@ app.post("/addNewUser", (req, res) => {
     }
     if (isNewUser){
         users.push(newUser);
-        fs.writeFileSync("./dataServer/users.json", JSON.stringify(users));
+        fs.writeFileSync(userPath, JSON.stringify(users));
         res.send("true");
     } else{
         res.send("false");
@@ -53,14 +54,14 @@ app.post("/dark", (req, res) => {
     let data = req.body;
     let username = data.username;
     let value = data.isDarkMode;
-    let users = JSON.parse(fs.readFileSync("./dataServer/users.json"));
+    let users = JSON.parse(fs.readFileSync(userPath));
     for (let user of users){
         let usernameServer = user.name.username;
         if (username === usernameServer){
             user.isInDarkMode = value;
         }
     }
-    fs.writeFileSync("./dataServer/users.json", JSON.stringify(users));
+    fs.writeFileSync(userPath, JSON.stringify(users));
     res.send("Make change successfully...!");
 })
 
@@ -68,7 +69,7 @@ app.post("/dark", (req, res) => {
 app.post("/getFirstnames", (req, res) => {
     let myFirstName = req.body.name;
     console.log(myFirstName);
-    let users = JSON.parse(fs.readFileSync("./dataServer/users.json"));
+    let users = JSON.parse(fs.readFileSync(userPath));
     let firstNames = [];
     let firstNameExist = [];
 
@@ -102,7 +103,7 @@ app.post("/addNewConversation", (req, res) => {
     conversations.push(newData);
     fs.writeFileSync(conversationPath, JSON.stringify(conversations));
 
-    let users = JSON.parse(fs.readFileSync("./dataServer/users.json"));
+    let users = JSON.parse(fs.readFileSync(userPath));
     for (let user of users){
         let firstNameServer = user.name.firstName;
         if (firstNameServer === senderFirst){
@@ -114,7 +115,7 @@ app.post("/addNewConversation", (req, res) => {
             user.chatWith.push(senderFirst);
         };
     }
-    fs.writeFileSync("./dataServer/users.json", JSON.stringify(users));
+    fs.writeFileSync(userPath, JSON.stringify(users));
 
     res.send("Create new conversation successfully...!");
 })
@@ -125,7 +126,7 @@ app.post("/getConversation", (req, res) => {
     let sender = names.sender;
     let receiver = names.receiver;
 
-    let conversations = JSON.parse(fs.readFileSync("./dataServer/conversations.json"));
+    let conversations = JSON.parse(fs.readFileSync(conversationPath));
     for (let conv of conversations){
         let starterServer = conv.starter.name;
         let receiverServer = conv.receiver.name;
@@ -138,7 +139,7 @@ app.post("/getConversation", (req, res) => {
             res.send(conv.messages);
         };
     }
-    fs.writeFileSync("./dataServer/conversations.json", JSON.stringify(conversations));
+    fs.writeFileSync(conversationPath, JSON.stringify(conversations));
 })
 // ------- Send New Message Only ---------------------------------------------
 app.post("/updateConversation", (req, res) => {
@@ -146,7 +147,7 @@ app.post("/updateConversation", (req, res) => {
     let sender = names.sender;
     let receiver = names.receiver;
 
-    let conversations = JSON.parse(fs.readFileSync("./dataServer/conversations.json"));
+    let conversations = JSON.parse(fs.readFileSync(conversationPath));
     for (let conv of conversations){
         let starterServer = conv.starter.name;
         let receiverServer = conv.receiver.name;
@@ -170,7 +171,7 @@ app.post("/updateConversation", (req, res) => {
             };
         };
     };
-    fs.writeFileSync("./dataServer/conversations.json", JSON.stringify(conversations)); 
+    fs.writeFileSync(conversationPath, JSON.stringify(conversations)); 
 })
 
 // -------- Store New Message ------------------------------------------------
