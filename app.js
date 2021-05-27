@@ -188,6 +188,7 @@ app.post("/addNewMessage", (req, res) => {
         if (((sender === starterServer) && (receiver === receiverServer)) || ((sender === receiverServer) && (receiver === starterServer))){
             message.id = conv.messages.length;
             conv.messages.push(message);
+            console.log(conv.messages);
         };
     }
     fs.writeFileSync(conversationPath, JSON.stringify(conversations));
