@@ -391,6 +391,7 @@ function displayNewUsers(newUser){
 
         ul.appendChild(li);
     };
+    goPlayerBottom();
 }
 
 let searchBox = document.querySelector("#search");
@@ -592,18 +593,19 @@ let showNewContact = function (){
     setInterval( () => {
         axios.post(URL + "/updateContacts", {"name" : myFirstName}).then((response) => {
             let newContacts = response.data;
-            console.log(newContacts);
             if (newContacts.length > 0){
                 displayNewUsers(newContacts);
-            } else{
-                console.log("no data");
-            };
+            }
         });
     }, 4000);
 }
 function goBottom(){
     let mCt = document.querySelector(".messagesContainer");
     mCt.scrollTop = mCt.scrollHeight - mCt.clientHeight;
+}
+function goPlayerBottom(){
+    let uCt = document.querySelector(".containerUsers");
+    uCt.scrollTop = uCt.scrollHeight - uCt.clientHeight;
 }
 let numOfMes = document.querySelectorAll(".messagesContainer li").length;
 function sendMes(){
