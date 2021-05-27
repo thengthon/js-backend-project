@@ -2,27 +2,33 @@ const express = require("express");
 const app = express();
 let users = [
     {   name: {
-            "firstName": "chum",
-            "lastName": "yoeurn",
-            "username": "chumyoeurn"
+            firstName: "chum",
+            lastName: "yoeurn",
+            username: "chumyoeurn"
         },
         password: "123chum",
         email: "chumyoeurn@gmail.com",
         isInDarkMode: false,
         conversations: [],
-        chatWith: []
+        chatWith: {
+            id : -1,
+            people : []
+        }
     },
     {
         name: {
             firstName: "chumm",
             lastName: "yoeurn",
-            username: "chumyoeurn"
+            username: "chummyoeurn"
         },
         password: "123chumm",
         email: "chumyoeurn@gmail.com",
         isInDarkMode: false,
         conversations: [],
-        chatWith: []
+        chatWith: {
+            id : -1,
+            people : []
+        }
     },
     {
         name: {
@@ -34,7 +40,10 @@ let users = [
         email: "thontheng@gmail.com",
         isInDarkMode: true,
         conversations: [],
-        chatWith: []
+        chatWith: {
+            id : -1,
+            people : []
+        }
     }
 ];
 let conversations = [];
@@ -43,7 +52,7 @@ app.listen(process.env.PORT || 5000, () => console.log("Server is running...!"))
 
 app.use(express.static("frontend"));
 app.use(express.json());
-app.use(express.urlencoded());
+// app.use(express.urlencoded());
 
 // --------- Login --------------------------------------------------------------
 app.post("/getUsers", (req, res) => {
@@ -56,6 +65,7 @@ app.post("/getUsers", (req, res) => {
         let usernameServer = user.name.username;
         let passwordServer = user.password;
         if (username === usernameServer && password === passwordServer){
+            user.chatWith.id = user.chatWith.people.length -1;
             res.send(user);
         }
     }
@@ -104,7 +114,9 @@ app.post("/getFirstnames", (req, res) => {
 
     for (let user of users){
         if (user.name.firstName === myFirstName){
-            firstNameExist = user.chatWith;
+            for (let one of user.chatWith.people){
+                firstNameExist.push(one.name);
+            };
         } else{
             firstNames.push(user.name.firstName);
         }
@@ -135,11 +147,15 @@ app.post("/addNewConversation", (req, res) => {
         let firstNameServer = user.name.firstName;
         if (firstNameServer === senderFirst){
             user.conversations.push(conversations.length);
-            user.chatWith.push(receiverFirst);
+            user.chatWith.people.push({name : receiverFirst, id : user.chatWith.people.length});
+            user.chatWith.id = user.chatWith.people.length -1;
+            console.log(user.chatWith.people);   //--------------------
         };
         if (firstNameServer === receiverFirst){
             user.conversations.push(conversations.length);
-            user.chatWith.push(senderFirst);
+            user.chatWith.people.push({name : senderFirst, id : user.chatWith.people.length});
+            user.chatWith.id = user.chatWith.people.length -1;
+            console.log(user.chatWith.people);   //--------------------
         };
     }
 
@@ -197,6 +213,30 @@ app.post("/updateConversation", (req, res) => {
     };
 })
 // ---------------------------------------------------------------------------
+// ------- Send New Contact Only ---------------------------------------------
+app.post("/updateContacts", (req, res) => {
+    let fName = req.body.name;
+    
+    for (let user of users){
+        let fNameServer = user.name.firstName;
+        
+        if (fName === fNameServer){
+            let newContact = [];
+            let id = user.chatWith.id;
+            // -----------------------------------------
+            for (let one of user.chatWith.people){
+                if (one.id > id){
+                    newContact.push(one.name);
+                }
+            };
+            res.send(newContact);
+            // -----------------------------------------
+            
+            user.chatWith.id = user.chatWith.people.length -1;
+        };
+    };
+})
+// ---------------------------------------------------------------------------
 
 // -------- Store New Message ------------------------------------------------
 app.post("/addNewMessage", (req, res) => {
@@ -211,7 +251,6 @@ app.post("/addNewMessage", (req, res) => {
         if (((sender === starterServer) && (receiver === receiverServer)) || ((sender === receiverServer) && (receiver === starterServer))){
             message.id = conv.messages.length;
             conv.messages.push(message);
-            console.log(conv.messages);
         };
     }
     res.send("ok");

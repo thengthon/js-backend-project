@@ -56,7 +56,6 @@ function login(e){
             if (result){
                 myFirstName = result.name.firstName;
                 myLastName = result.name.lastName;
-                allPlayers = result.chatWith;
 
                 let goUserPage = document.querySelector(".userPage");
                 preDisplay = document.querySelector(".authentication");
@@ -68,7 +67,12 @@ function login(e){
                 password.value = "";
                 
                 // ---- Display older partners ------------------------------------------
-                let existedPartner = result.chatWith;
+                let existedPartner = [];
+                console.log(result.chatWith);
+                for (let one of result.chatWith.people){
+                    existedPartner.push(one.name);
+                };
+                allPlayers = existedPartner;
                 displayUsers(existedPartner, existedPartner);
                 
                 // ---- Display older partners ------------------------------------------
@@ -114,16 +118,19 @@ function register(e){
     let isValidData = ((fName.checkValidity()) && (lName.checkValidity()) && (email.checkValidity()) && (confirmPwd.checkValidity()) && (password.checkValidity()) && (password.value === confirmPwd.value));
     if (isValidData){
         let newUser = {
-            "name" : {
-                "firstName" : fName.value,
-                "lastName" : lName.value,
-                "username" : fName.value + lName.value
+            name : {
+                firstName : fName.value,
+                lastName : lName.value,
+                username : fName.value + lName.value
             },
-            "password" : password.value,
-            "email" : email.value,
-            "isInDarkMode" : false,
-            "conversations" : [],
-            "chatWith" : []
+            password : password.value,
+            email : email.value,
+            isInDarkMode : false,
+            conversations : [],
+            chatWith : {
+                id : -1,
+                people : []
+            }
         };
         axios.post(URL + "/addNewUser", newUser).then((response) => {
             if (response.data){
@@ -141,14 +148,19 @@ function register(e){
                 verifyLogin.addEventListener("click", () => {
                     let log = document.querySelector(".login");
                     hideShow(preDisplay, log, "grid");
-                })
+                });
             } else{
                 window.alert("User is existed");
-            }
+                fName.value = "";
+                lName.value = "";
+                email.value = "";
+                password.value = "";
+                confirmPwd.value = "";
+            };
         })
     } else {
         window.alert("Missing or invalid data...!");
-    }
+    };
 }
 
 let RegisterBtn = document.querySelector(".registerBtn");
@@ -359,6 +371,27 @@ function displayUsers(users, exist){
     }
     document.querySelector(".leftSide").appendChild(newUl);
 }
+function displayNewUsers(newUser){
+    let ul = document.querySelector(".containerUsers");
+
+    for (let user of newUser){
+        let li = document.createElement("li");
+        let div = document.createElement("div");
+        let name = document.createElement("span");
+        let i = document.createElement("i");
+    
+        i.className = "fa fa-user-circle";
+
+        name.textContent = user;
+    
+        li.appendChild(div);
+
+        div.appendChild(i);
+        div.appendChild(name);
+
+        ul.appendChild(li);
+    };
+}
 
 let searchBox = document.querySelector("#search");
 searchBox.addEventListener("click", () => {
@@ -553,8 +586,21 @@ let startChat = function (){
                 }
             });
         };
-    }, 1000);
+    }, 2000);
 };
+let showNewContact = function (){
+    setInterval( () => {
+        axios.post(URL + "/updateContacts", {"name" : myFirstName}).then((response) => {
+            let newContacts = response.data;
+            console.log(newContacts);
+            if (newContacts.length > 0){
+                displayNewUsers(newContacts);
+            } else{
+                console.log("no data");
+            };
+        });
+    }, 4000);
+}
 function goBottom(){
     let mCt = document.querySelector(".messagesContainer");
     mCt.scrollTop = mCt.scrollHeight - mCt.clientHeight;
@@ -584,4 +630,5 @@ sendBtn.addEventListener("click", sendMes);
 //     }
 // });
 // ================================================================================
-startChat()
+startChat();
+showNewContact();
