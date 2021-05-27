@@ -553,7 +553,7 @@ let startChat = function (){
                 }
             });
         };
-    }, 3000);
+    }, 1000);
 };
 function goBottom(){
     let mCt = document.querySelector(".messagesContainer");
