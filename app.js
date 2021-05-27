@@ -159,6 +159,7 @@ app.post("/updateConversation", (req, res) => {
             };
             // -----------------------------------------
             let newMessages = conv.messages.slice(id+1, conv.messages.length)
+            res.send(newMessages);
             // -----------------------------------------
 
             if (sender === starterServer){
@@ -166,7 +167,6 @@ app.post("/updateConversation", (req, res) => {
             } else{
                 conv.receiver.id = conv.messages.length - 1;
             };
-            res.send(newMessages);
         };
     };
     fs.writeFileSync("./dataServer/conversations.json", JSON.stringify(conversations)); 

@@ -362,7 +362,7 @@ function displayUsers(users, exist){
 
 let searchBox = document.querySelector("#search");
 searchBox.addEventListener("click", () => {
-    axios.post("/getFirstnames", {"name" : myFirstName}).then((response) => {
+    axios.post(URL + "/getFirstnames", {"name" : myFirstName}).then((response) => {
         let data = response.data;
         let firstNames = data.all;
         let existFirstNames = data.exist;
@@ -408,7 +408,7 @@ searchBox.addEventListener("click", () => {
                         "sender" : myFirstName,
                         "receiver" : name
                     }
-                    axios.post("/addNewConversation", message).then((res) => console.log(res.data));
+                    axios.post(URL + "/addNewConversation", message).then((res) => console.log(res.data));
                 }
             })
         })
@@ -536,7 +536,7 @@ leftSide.addEventListener("click", (e) => {
         if (allPlayers.includes(name)){
             document.querySelector(".partner").textContent = name;
             mes = {"sender" : myFirstName, "receiver" : name};
-            axios.post("/getConversation", mes).then((response) => {
+            axios.post(URL + "/getConversation", mes).then((response) => {
                 let messages = response.data;
                 displayMessages(messages);
             });
@@ -546,7 +546,7 @@ leftSide.addEventListener("click", (e) => {
 let startChat = function (){
     setInterval( () => {
         if (mes !== ""){
-            axios.post("/updateConversation", mes).then((response) => {
+            axios.post(URL + "/updateConversation", mes).then((response) => {
                 let newMes = response.data;
                 if (newMes.length > 0){
                     updateMes(newMes);
@@ -571,7 +571,7 @@ function sendMes(){
                 "message" : textMessage
             }
         };
-        axios.post("/addNewMessage", toSend);
+        axios.post(URL + "/addNewMessage", toSend);
 
         document.querySelector("#sms").value = "";
     }
