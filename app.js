@@ -149,13 +149,10 @@ app.post("/addNewConversation", (req, res) => {
             user.conversations.push(conversations.length);
             user.chatWith.people.push({name : receiverFirst, id : user.chatWith.people.length});
             user.chatWith.id = user.chatWith.people.length -1;
-            console.log(user.chatWith.people);   //--------------------
         };
         if (firstNameServer === receiverFirst){
             user.conversations.push(conversations.length);
             user.chatWith.people.push({name : senderFirst, id : user.chatWith.people.length});
-            user.chatWith.id = user.chatWith.people.length -1;
-            console.log(user.chatWith.people);   //--------------------
         };
     }
 

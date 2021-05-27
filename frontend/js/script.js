@@ -624,11 +624,13 @@ function sendMes(){
 }
 let sendBtn = document.querySelector(".send");
 sendBtn.addEventListener("click", sendMes);
-// sendBtn.addEventListener("keyup", (e) => {
-//     if (e.key === "Enter"){
-//         sendMes();
-//     }
-// });
+
+let boxSend = document.querySelector("#sms");
+boxSend.addEventListener("keyup", (e) => {
+    if (e.key === "Enter"){
+        sendMes();
+    }
+});
 // ================================================================================
 startChat();
 showNewContact();
