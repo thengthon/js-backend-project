@@ -93,6 +93,9 @@ function login(e){
                     setDarkMode();
                     isDarkMode = true;
                     document.querySelector("#dark").checked = true;
+                } else {
+                    isDarkMode = false;
+                    document.querySelector("#dark").checked = false;
                 };
             } else {
                 window.alert("Username or password is incorrect.");
@@ -597,7 +600,7 @@ let showNewContact = function (){
                 displayNewUsers(newContacts);
             }
         });
-    }, 4000);
+    }, 60000);
 }
 function goBottom(){
     let mCt = document.querySelector(".messagesContainer");
