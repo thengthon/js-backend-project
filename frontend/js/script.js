@@ -94,6 +94,7 @@ function login(e){
                     isDarkMode = true;
                     document.querySelector("#dark").checked = true;
                 } else {
+                    unDarkMode();
                     isDarkMode = false;
                     document.querySelector("#dark").checked = false;
                 };
