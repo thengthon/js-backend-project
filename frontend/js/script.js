@@ -378,6 +378,7 @@ function displayUsers(users, exist){
 };
 function displayNewUsers(newUser){
     let ul = document.querySelector(".containerUsers");
+    let isFirst = true;
 
     for (let user of newUser){
         let li = document.createElement("li");
@@ -394,7 +395,18 @@ function displayNewUsers(newUser){
         div.appendChild(i);
         div.appendChild(name);
 
+        if (isFirst && ul.children.length === 0){
+            document.querySelector(".partner").textContent = user;
+            mes = {"sender" : myFirstName, "receiver" : user};
+        };
+
         ul.appendChild(li);
+        allPlayers.push(user)
+
+        isFirst = false
+    };
+    if (isDarkMode){
+        setDarkMode();
     };
     goPlayerBottom();
 };
@@ -534,31 +546,7 @@ function updateMes(newMessages){
     goBottom();
 };
 
-function displayNewMessage(oneMessage){
-    let container = document.querySelector(".messagesContainer");
 
-    let li = document.createElement("li");
-    let profile = document.createElement("div");
-    let text = document.createElement("div");
-    let i = document.createElement("i");
-
-    i.className = "fa fa-user-circle";
-    profile.className = "profileUser";
-    text.className = "messageText";
-
-    profile.appendChild(i);
-    text.textContent = oneMessage;
-
-    li.className = "sender";
-    li.appendChild(text);
-    li.appendChild(profile);
-
-    container.appendChild(li);
-    if (isDarkMode){
-        setDarkMode();
-    };
-    goBottom();
-};
 
 leftSide.addEventListener("click", (e) => {
     let click = e.target;
