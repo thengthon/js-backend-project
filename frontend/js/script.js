@@ -1,5 +1,6 @@
 // _______CONSTANT VARIABLES____________________________________
-const URL = "https://cam-chat.herokuapp.com";
+// const URL = "https://cam-chat.herokuapp.com";
+const URL = "http://localhost:5000";
 let myFirstName = "";
 let myLastName = "";
 let allPlayers = [];
@@ -17,7 +18,7 @@ function hideShow(pre, next, display){
     pre.style.display = "none";
     next.style.display = display;
     preDisplay = next;
-}
+};
 
 let goRegister = document.querySelector(".goRegister");
 goRegister.addEventListener("click", () => {
@@ -105,7 +106,7 @@ function login(e){
     } else {
         window.alert("Missing or invalid data.");
     };
-}
+};
 
 let loginBtn = document.querySelector(".loginBtn");
 loginBtn.addEventListener("click", login);
@@ -165,7 +166,7 @@ function register(e){
     } else {
         window.alert("Missing or invalid data...!");
     };
-}
+};
 
 let RegisterBtn = document.querySelector(".registerBtn");
 RegisterBtn.addEventListener("click", register);
@@ -178,7 +179,7 @@ signoutMenu.addEventListener("click", () => {
         preDisplay = document.querySelector(".userPage");
         hideShow(preDisplay, loginPage, "block");
     }
-})
+});
 
 // ---------------------------------------------------------------
 let goSettingBtn = document.querySelector(".fa-navicon");
@@ -196,7 +197,7 @@ goSettingBtn.addEventListener("click", () => {
 
         document.querySelector(".userPage").style.gridTemplateColumns = "25% 50% 25%";
     };
-})
+});
 
 // ---------------------------------------------------------------------------------------
 function setDarkMode(){
@@ -256,7 +257,7 @@ function setDarkMode(){
 
     sms.style.background = "rgb(85, 85, 85)";
     sms.style.color = "#fff";
-}
+};
 function unDarkMode(){
     document.querySelector(".userPage").style.color = "#000";
     document.querySelector(".leftSide").style.background = "rgba(128, 128, 128, 0.103)";
@@ -310,7 +311,7 @@ function unDarkMode(){
     // sms.style.placeholderColor = "#fff";
     sms.style.background = "#fff";
     sms.style.color = "#000";
-}
+};
 let darkMode = document.querySelector("#dark");
 darkMode.addEventListener("click", () => {
     let isDark = document.querySelector("#dark").checked;
@@ -328,7 +329,7 @@ darkMode.addEventListener("click", () => {
     axios.post(URL + "/dark", message).then((response) => {
         console.log(response.data);
     });
-})
+});
 
 // ------ Style and Emoji ----------------------------------------------------
 let style = document.querySelector(".styles");
@@ -340,7 +341,7 @@ style.addEventListener("click", () => {
         document.querySelector(".btns").style.display = "none";
         showOption = true;
     }
-})
+});
 
 // ------------ Search Contact -----------------------------------------------
 function displayUsers(users, exist){
@@ -374,7 +375,7 @@ function displayUsers(users, exist){
         newUl.appendChild(li);
     }
     document.querySelector(".leftSide").appendChild(newUl);
-}
+};
 function displayNewUsers(newUser){
     let ul = document.querySelector(".containerUsers");
 
@@ -396,7 +397,7 @@ function displayNewUsers(newUser){
         ul.appendChild(li);
     };
     goPlayerBottom();
-}
+};
 
 let searchBox = document.querySelector("#search");
 searchBox.addEventListener("click", () => {
@@ -452,7 +453,7 @@ searchBox.addEventListener("click", () => {
         })
     })
 
-})
+});
 
 // ================ SEND & RECEIVE ================================================
 function displayMessages(messages){
@@ -522,6 +523,8 @@ function updateMes(newMessages){
             li.className = "receiver";
             li.appendChild(profile);
             li.appendChild(text);
+            let sound = new Audio("sound/iPhone SMS.mp3");
+            sound.play()
         };
         container.appendChild(li);
     };
@@ -530,6 +533,7 @@ function updateMes(newMessages){
     };
     goBottom();
 };
+
 function displayNewMessage(oneMessage){
     let container = document.querySelector(".messagesContainer");
 
@@ -554,7 +558,7 @@ function displayNewMessage(oneMessage){
         setDarkMode();
     };
     goBottom();
-}
+};
 
 leftSide.addEventListener("click", (e) => {
     let click = e.target;
@@ -581,6 +585,7 @@ leftSide.addEventListener("click", (e) => {
         }
     }
 });
+
 let startChat = function (){
     setInterval( () => {
         if (mes !== ""){
@@ -593,6 +598,7 @@ let startChat = function (){
         };
     }, 2000);
 };
+
 let showNewContact = function (){
     setInterval( () => {
         axios.post(URL + "/updateContacts", {"name" : myFirstName}).then((response) => {
@@ -602,19 +608,22 @@ let showNewContact = function (){
             }
         });
     }, 60000);
-}
+};
+
 function goBottom(){
     let mCt = document.querySelector(".messagesContainer");
     mCt.scrollTop = mCt.scrollHeight - mCt.clientHeight;
-}
+};
 function goPlayerBottom(){
     let uCt = document.querySelector(".containerUsers");
     uCt.scrollTop = uCt.scrollHeight - uCt.clientHeight;
-}
+};
 let numOfMes = document.querySelectorAll(".messagesContainer li").length;
 function sendMes(){
     let textMessage = document.querySelector("#sms").value;
     if (textMessage !== ""){
+        let sound = new Audio("sound/sound.mp3");
+        sound.play()
         let toSend = {
             "sender" : myFirstName,
             "receiver" : document.querySelector(".partner").textContent,
@@ -627,7 +636,7 @@ function sendMes(){
 
         document.querySelector("#sms").value = "";
     }
-}
+};
 let sendBtn = document.querySelector(".send");
 sendBtn.addEventListener("click", sendMes);
 
