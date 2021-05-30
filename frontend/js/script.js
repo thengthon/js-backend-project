@@ -1,6 +1,5 @@
 // _______CONSTANT VARIABLES____________________________________
-// const URL = "https://cam-chat.herokuapp.com";
-const URL = "http://localhost:5000";
+const URL = "https://cam-chat.herokuapp.com";
 let myFirstName = "";
 let myLastName = "";
 let allPlayers = [];
