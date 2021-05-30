@@ -1,1 +1,47 @@
-[{"name":{"firstName":"chum","lastName":"yoeurn","username":"chumyoeurn"},"password":"123chum","email":"chumyoeurn@gmail.com","isInDarkMode":false,"conversations":[1],"chatWith":{"id":-1,"people":[{"name":"thon","id":0}]}},{"name":{"firstName":"chumm","lastName":"yoeurn","username":"chummyoeurn"},"password":"123chumm","email":"chumyoeurn@gmail.com","isInDarkMode":false,"conversations":[2],"chatWith":{"id":-1,"people":[{"name":"thon","id":0}]}},{"name":{"firstName":"thon","lastName":"theng","username":"thontheng"},"password":"123thon","email":"thontheng@gmail.com","isInDarkMode":true,"conversations":[1,2],"chatWith":{"id":1,"people":[{"name":"chum","id":0},{"name":"chumm","id":1}]}}]
+[
+    {
+        "name": {
+            "firstName": "chum",
+            "lastName": "yoeurn",
+            "username": "chumyoeurn"
+        },
+        "password": "123chum",
+        "email": "chumyoeurn@gmail.com",
+        "isInDarkMode": false,
+        "conversations": [],
+        "chatWith": {
+            "id": -1,
+            "people": []
+        }
+    },
+    {
+        "name": {
+            "firstName": "chumm",
+            "lastName": "yoeurn",
+            "username": "chummyoeurn"
+        },
+        "password": "123chumm",
+        "email": "chumyoeurn@gmail.com",
+        "isInDarkMode": false,
+        "conversations": [],
+        "chatWith": {
+            "id": -1,
+            "people": []
+        }
+    },
+    {
+        "name": {
+            "firstName": "thon",
+            "lastName": "theng",
+            "username": "thontheng"
+        },
+        "password": "123thon",
+        "email": "thontheng@gmail.com",
+        "isInDarkMode": true,
+        "conversations": [],
+        "chatWith": {
+            "id": -1,
+            "people": []
+        }
+    }
+]
