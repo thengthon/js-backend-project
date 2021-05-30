@@ -1,52 +1,8 @@
 const express = require("express");
 const app = express();
-let users = [
-    {   name: {
-            firstName: "chum",
-            lastName: "yoeurn",
-            username: "chumyoeurn"
-        },
-        password: "123chum",
-        email: "chumyoeurn@gmail.com",
-        isInDarkMode: false,
-        conversations: [],
-        chatWith: {
-            id : -1,
-            people : []
-        }
-    },
-    {
-        name: {
-            firstName: "chumm",
-            lastName: "yoeurn",
-            username: "chummyoeurn"
-        },
-        password: "123chumm",
-        email: "chumyoeurn@gmail.com",
-        isInDarkMode: false,
-        conversations: [],
-        chatWith: {
-            id : -1,
-            people : []
-        }
-    },
-    {
-        name: {
-            firstName: "thon",
-            lastName: "theng",
-            username: "thontheng"
-        },
-        password: "123thon",
-        email: "thontheng@gmail.com",
-        isInDarkMode: true,
-        conversations: [],
-        chatWith: {
-            id : -1,
-            people : []
-        }
-    }
-];
-let conversations = [];
+const fs = require("fs");
+const userPath = "./dataServer/users.json";
+const conversationPath = "./dataServer/conversations.json";
 
 app.listen(process.env.PORT || 5000, () => console.log("Server is running...!"))
 
@@ -61,6 +17,7 @@ app.post("/getUsers", (req, res) => {
     let password = userReq.password;
     
     let isValidUser = false;
+    let users = JSON.parse(fs.readFileSync(userPath));
     for (let user of users){
         let usernameServer = user.name.username;
         let passwordServer = user.password;
@@ -70,6 +27,7 @@ app.post("/getUsers", (req, res) => {
         }
     }
     res.send("false");
+    fs.writeFileSync(userPath, JSON.stringify(users));
 })
 
 // --------- Register --------------------------------------------------------
@@ -77,6 +35,7 @@ app.post("/addNewUser", (req, res) => {
     let newUser = req.body;
 
     let isNewUser = true;
+    let users = JSON.parse(fs.readFileSync(userPath));
     for (let user of users){
         let usernameServer = user.name.username;
         if (newUser.name.username === usernameServer){
@@ -89,6 +48,7 @@ app.post("/addNewUser", (req, res) => {
     } else{
         res.send("false");
     };
+    fs.writeFileSync(userPath, JSON.stringify(users));
 });
 // ---------------------------------------------------------------------------
 // -------- Dark Mode ---------------------------------------------------------
@@ -96,6 +56,7 @@ app.post("/dark", (req, res) => {
     let data = req.body;
     let username = data.username;
     let value = data.isDarkMode;
+    let users = JSON.parse(fs.readFileSync(userPath));
     for (let user of users){
         let usernameServer = user.name.username;
         if (username === usernameServer){
@@ -103,6 +64,7 @@ app.post("/dark", (req, res) => {
         }
     }
     res.send("Make change successfully...!");
+    fs.writeFileSync(userPath, JSON.stringify(users));
 })
 // ---------------------------------------------------------------------------
 // -------- Response FirstNames ----------------------------------------------
@@ -112,6 +74,7 @@ app.post("/getFirstnames", (req, res) => {
     let firstNames = [];
     let firstNameExist = [];
 
+    let users = JSON.parse(fs.readFileSync(userPath));
     for (let user of users){
         if (user.name.firstName === myFirstName){
             for (let one of user.chatWith.people){
@@ -135,6 +98,8 @@ app.post("/addNewConversation", (req, res) => {
     let senderFirst = data.sender;
     let receiverFirst = data.receiver;
 
+    let conversations = JSON.parse(fs.readFileSync(conversationPath));
+
     let newData = {
         "id" : conversations.length + 1,
         "starter" : { "name" : senderFirst, "id" : -1},
@@ -142,7 +107,9 @@ app.post("/addNewConversation", (req, res) => {
         "messages" : []
     };
     conversations.push(newData);
+    fs.writeFileSync(conversationPath, JSON.stringify(conversations));
 
+    let users = JSON.parse(fs.readFileSync(userPath));
     for (let user of users){
         let firstNameServer = user.name.firstName;
         if (firstNameServer === senderFirst){
@@ -155,7 +122,7 @@ app.post("/addNewConversation", (req, res) => {
             user.chatWith.people.push({name : senderFirst, id : user.chatWith.people.length});
         };
     }
-
+    fs.writeFileSync(userPath, JSON.stringify(users));
     res.send("Create new conversation successfully...!");
 })
 // --------------------------------------------------------------------------
@@ -165,6 +132,7 @@ app.post("/getConversation", (req, res) => {
     let sender = names.sender;
     let receiver = names.receiver;
 
+    let conversations = JSON.parse(fs.readFileSync(conversationPath));
     for (let conv of conversations){
         let starterServer = conv.starter.name;
         let receiverServer = conv.receiver.name;
@@ -177,6 +145,7 @@ app.post("/getConversation", (req, res) => {
             res.send(conv.messages);
         };
     }
+    fs.writeFileSync(conversationPath, JSON.stringify(conversations));
 })
 // --------------------------------------------------------------------------
 // ------- Send New Message Only ---------------------------------------------
@@ -185,6 +154,7 @@ app.post("/updateConversation", (req, res) => {
     let sender = names.sender;
     let receiver = names.receiver;
 
+    let conversations = JSON.parse(fs.readFileSync(conversationPath));
     for (let conv of conversations){
         let starterServer = conv.starter.name;
         let receiverServer = conv.receiver.name;
@@ -208,12 +178,14 @@ app.post("/updateConversation", (req, res) => {
             };
         };
     };
+    fs.writeFileSync(conversationPath, JSON.stringify(conversations));
 })
 // ---------------------------------------------------------------------------
 // ------- Send New Contact Only ---------------------------------------------
 app.post("/updateContacts", (req, res) => {
     let fName = req.body.name;
     
+    let users = JSON.parse(fs.readFileSync(userPath));
     for (let user of users){
         let fNameServer = user.name.firstName;
         
@@ -232,6 +204,7 @@ app.post("/updateContacts", (req, res) => {
             user.chatWith.id = user.chatWith.people.length -1;
         };
     };
+    fs.writeFileSync(userPath, JSON.stringify(users));
 })
 // ---------------------------------------------------------------------------
 
@@ -242,6 +215,7 @@ app.post("/addNewMessage", (req, res) => {
     let receiver = data.receiver;
     let message = data.message;
 
+    let conversations = JSON.parse(fs.readFileSync(conversationPath));
     for (let conv of conversations){
         let starterServer = conv.starter.name;
         let receiverServer = conv.receiver.name;
@@ -251,5 +225,6 @@ app.post("/addNewMessage", (req, res) => {
         };
     }
     res.send("ok");
+    fs.writeFileSync(conversationPath, JSON.stringify(conversations));
 })
 // ---------------------------------------------------------------------------
