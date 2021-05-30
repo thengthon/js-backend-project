@@ -280,10 +280,12 @@ ul {
 .receiver .messageText{
     background: #f4d9c6;
     border-radius: 0 5px 5px 5px;
+    text-align: left;
 }
 .sender .messageText{
     background: #a3d8f4;
     border-radius: 5px 0 5px 5px;
+    text-align: left;
 }
 .messageText{
     max-width: 82%;

@@ -1,5 +1,6 @@
 // _______CONSTANT VARIABLES____________________________________
-const URL = "https://cam-chat.herokuapp.com";
+// const URL = "https://cam-chat.herokuapp.com";
+const URL = "http://localhost:5000";
 let myFirstName = "";
 let myLastName = "";
 let allPlayers = [];
@@ -636,4 +637,5 @@ boxSend.addEventListener("keyup", (e) => {
 });
 // ================================================================================
 startChat();
-showNewContact();
+// showNewContact();
+// I want to display automatically when I am added by other users, but I error on heroku. Maybe too much requests.
