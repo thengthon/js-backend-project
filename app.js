@@ -16,16 +16,16 @@ app.post("/getUsers", (req, res) => {
     let username = userReq.username;
     let password = userReq.password;
     
-    let isValidUser = false;
     let users = JSON.parse(fs.readFileSync(userPath));
+    console.log(users);
     for (let user of users){
         let usernameServer = user.name.username;
         let passwordServer = user.password;
         if (username === usernameServer && password === passwordServer){
             user.chatWith.id = user.chatWith.people.length -1;
             res.send(user);
-        }
-    }
+        };
+    };
     res.send("false");
     fs.writeFileSync(userPath, JSON.stringify(users));
 })

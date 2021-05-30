@@ -1,6 +1,5 @@
 // _______CONSTANT VARIABLES____________________________________
 const URL = "https://cam-chat.herokuapp.com";
-// const URL = "http://localhost:5000";
 let myFirstName = "";
 let myLastName = "";
 let allPlayers = [];
@@ -69,14 +68,13 @@ function login(e){
                 
                 // ---- Display older partners ------------------------------------------
                 let existedPartner = [];
-                console.log(result.chatWith);
                 for (let one of result.chatWith.people){
                     existedPartner.push(one.name);
                 };
                 allPlayers = existedPartner;
                 displayUsers(existedPartner, existedPartner);
                 
-                // ---- Display older partners ------------------------------------------
+                // ---- Display old partners ------------------------------------------
                 if (existedPartner.length > 0){
                     let firstPlayer = existedPartner[0];
                     document.querySelector(".partner").textContent = firstPlayer;
@@ -178,6 +176,7 @@ signoutMenu.addEventListener("click", () => {
         let loginPage = document.querySelector(".authentication");
         preDisplay = document.querySelector(".userPage");
         hideShow(preDisplay, loginPage, "block");
+        mes = "";
     }
 });
 
@@ -375,6 +374,7 @@ function displayUsers(users, exist){
         newUl.appendChild(li);
     }
     document.querySelector(".leftSide").appendChild(newUl);
+    goPlayerBottom();
 };
 function displayNewUsers(newUser){
     let ul = document.querySelector(".containerUsers");
@@ -584,7 +584,7 @@ let startChat = function (){
                 }
             });
         };
-    }, 2000);
+    }, 3000);
 };
 
 let showNewContact = function (){
